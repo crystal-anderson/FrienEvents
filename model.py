@@ -26,11 +26,14 @@ class User(db.Model):
     user_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    # event_id = 
-    #           // LINK TO EVENTS TABLE
     email = db.Column(db.String, unique=True)
-    password = db.Column(db.String)
-    name = db.Column(db.String)
+    password = db.Column(db.String(20))
+    name = db.Column(db.String(50))
+
+    comments = db.relationship('Comment')
+    events = db.relationship('Event',
+                        secondary='users',
+                        backref='users_events')
 
     def __repr__(self):
         return f'<User user_id={self.user_id} name={self.name} email={self.email}>'
@@ -44,11 +47,15 @@ class Comment(db.Model):
     comment_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-
     comment = db.Column(db.Text)
-    # user_id = 
-    #         // LINK TO USER TABLE
     comment_date = db.Column(db.DateTime)
+
+    user_id = db.relationship(db.Integer,
+                        secondary=db.ForeignKey('users.user_id'),
+                        nullable=False)
+    event_id = db.relationship(db.Integer,
+                        secondary=db.ForeignKey('events.event_id'),
+                        nullable=False)
 
     def __repr__(self):
         return f'<Comment comment_id={self.comment_id} comment={self.comment} comment_date={comment_date}'
@@ -63,27 +70,35 @@ class Event(db.Model):
                         autoincrement=True,
                         primary_key=True)
     usr_desc = db.Column(db.Text)
-    site_title = db.Column(db.String)
+    site_title = db.Column(db.String(50))
     event_date = db.Column(db.DateTime)
-    event_url = db.Column(db.String)
+    event_url = db.Column(db.String(200))
+
+    comments = db.relationship('Comment')
+    user_id = db.relationship(db.Integer,
+                        secondary=db.ForeignKey('users.user_id'),
+                        nullable=False)
 
 
-class Calendar(db.Model):
+class UserEvent(db.Model):
     """This allows for multiple events to be tied to multiple users. Many to many."""
 
-    __tablename__ = 'calendars'
+    __tablename__ = 'users_events'
 
-    calendar_id = db.Column(db.Integer,
+    user_event_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    # user_id = 
-    #         // LINK TO USER TABLE
-    # event_id = 
-    #         // LINK TO EVENT TABLE
-
+    
+    event_id = db.relationship(db.Integer,
+                        secondary=db.ForeignKey('users.user_id'),
+                        nullable=False)
+    event_id = db.relationship(db.Integer,
+                        secondary=db.ForeignKey('events.event_id'),
+                        nullable=False)
 
 
 if __name__ == '__main__':
     from server import app
 
     connect_to_db(app)
+    
