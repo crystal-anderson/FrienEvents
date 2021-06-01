@@ -58,7 +58,7 @@ class Comment(db.Model):
                         nullable=False)
 
     def __repr__(self):
-        return f'<Comment comment_id={self.comment_id} comment={self.comment} comment_date={comment_date}'
+        return f'<Comment comment_id={self.comment_id} comment={self.comment} comment_date={comment_date}>'
 
 
 class Event(db.Model):
@@ -79,6 +79,9 @@ class Event(db.Model):
                         secondary=db.ForeignKey('users.user_id'),
                         nullable=False)
 
+    def __repr__(self):
+        return f'<Event event_id={self.event_id} user_desc={self.usr_desc} event_date={event_date}>'
+
 
 class UserEvent(db.Model):
     """This allows for multiple events to be tied to multiple users. Many to many."""
@@ -89,12 +92,15 @@ class UserEvent(db.Model):
                         autoincrement=True,
                         primary_key=True)
     
-    event_id = db.relationship(db.Integer,
+    user_id = db.relationship(db.Integer,
                         secondary=db.ForeignKey('users.user_id'),
                         nullable=False)
     event_id = db.relationship(db.Integer,
                         secondary=db.ForeignKey('events.event_id'),
                         nullable=False)
+
+    def __repr__(self):
+        return f'<UserEvent user_event_id={self.user.event_id}>'
 
 
 if __name__ == '__main__':
