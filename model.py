@@ -6,18 +6,6 @@ from datetime import datetime
 
 db = SQLAlchemy()
 
-
-def connect_to_db(flask_app, db_uri='postgresql:///frienevents', echo=True):
-    flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-    flask_app.config['SQLALCHEMY_ECHO'] = echo
-    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-    db.app = flask_app
-    db.init_app(flask_app)
-
-    print('Connected to the db!')
-
-
 class User(db.Model):
     """A user."""
 
@@ -31,12 +19,10 @@ class User(db.Model):
     name = db.Column(db.String(50))
 
     comments = db.relationship('Comment')
-    events = db.relationship('Event',
-                        secondary='users',
-                        backref='users_events')
+    events = db.relationship('Event')
 
     def __repr__(self):
-        return f'<User user_id={self.user_id} name={self.name} email={self.email}>'
+        return f'<User || user_id={self.user_id} // name={self.name} // email={self.email}>'
 
 
 class Comment(db.Model):
@@ -50,15 +36,15 @@ class Comment(db.Model):
     comment = db.Column(db.Text)
     comment_date = db.Column(db.DateTime)
 
-    user_id = db.relationship(db.Integer,
-                        secondary=db.ForeignKey('users.user_id'),
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'),
                         nullable=False)
-    event_id = db.relationship(db.Integer,
-                        secondary=db.ForeignKey('events.event_id'),
+    event_id = db.Column(db.Integer,
+                        db.ForeignKey('events.event_id'),
                         nullable=False)
 
     def __repr__(self):
-        return f'<Comment comment_id={self.comment_id} comment={self.comment} comment_date={comment_date}>'
+        return f'<Comment || comment_id={self.comment_id} // comment={self.comment} // comment_date={self.comment_date}>'
 
 
 class Event(db.Model):
@@ -75,12 +61,12 @@ class Event(db.Model):
     event_url = db.Column(db.String(200))
 
     comments = db.relationship('Comment')
-    user_id = db.relationship(db.Integer,
-                        secondary=db.ForeignKey('users.user_id'),
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'),
                         nullable=False)
 
     def __repr__(self):
-        return f'<Event event_id={self.event_id} user_desc={self.usr_desc} event_date={event_date}>'
+        return f'<Event || event_id={self.event_id} // user_desc={self.usr_desc} // event_date={event_date}>'
 
 
 class UserEvent(db.Model):
@@ -92,15 +78,25 @@ class UserEvent(db.Model):
                         autoincrement=True,
                         primary_key=True)
     
-    user_id = db.relationship(db.Integer,
-                        secondary=db.ForeignKey('users.user_id'),
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'),
                         nullable=False)
-    event_id = db.relationship(db.Integer,
-                        secondary=db.ForeignKey('events.event_id'),
+    event_id = db.Column(db.Integer,
+                        db.ForeignKey('events.event_id'),
                         nullable=False)
 
     def __repr__(self):
-        return f'<UserEvent user_event_id={self.user.event_id}>'
+        return f'<UserEvent || user_event_id={self.user.event_id}>'
+
+def connect_to_db(flask_app, db_uri='postgresql:///frienevents', echo=True):
+    flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    flask_app.config['SQLALCHEMY_ECHO'] = echo
+    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    db.app = flask_app
+    db.init_app(flask_app)
+
+    print('Connected to the db!')
 
 
 if __name__ == '__main__':
@@ -108,3 +104,8 @@ if __name__ == '__main__':
 
     connect_to_db(app)
     
+    q_comments = Comment.query.all()
+    q_events = Event.query.all()
+    q_users = User.query.all()
+
+#TO DO
