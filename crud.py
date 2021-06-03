@@ -38,7 +38,7 @@ def get_user_by_username(username):
     return User.query.filter(User.username == username).all()
 
 
-def create_event(usr_desc, site_title, event_date, event_url, user_id):
+def create_event(usr_desc, site_title, event_date, event_url):
     """Create and return a new event."""
 
 
@@ -46,8 +46,7 @@ def create_event(usr_desc, site_title, event_date, event_url, user_id):
         usr_desc=usr_desc,
         site_title=site_title,
         event_date=event_date,
-        event_url=event_url,
-        user_id=user_id
+        event_url=event_url
     )
 
     db.session.add(event)
@@ -65,12 +64,6 @@ def get_event_by_id(event_id):
     """Return an event by primary key."""
 
     return Event.query.get(event_id)
-
-
-def get_events_by_user_id(user_id):
-    """Return events by user primary key."""
-
-    return Event.query.filter(Event.user_id == user_id).all()
 
 
 def create_comment(user_id, event_id, comment, comment_date):
