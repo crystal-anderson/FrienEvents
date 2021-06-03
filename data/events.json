@@ -1,0 +1,16 @@
+[
+    {
+        "usr_desc": "ACL - Weekend 1",
+        "site_title": "Austin City Limits Music Festival",
+        "event_date": "2021-10-02",
+        "event_url": "https://www.aclfestival.com/",
+        "user_id": "1"
+    },
+    {
+        "usr_desc": "ACL - Weekend 2",
+        "site_title": "Austin City Limits Music Festival",
+        "event_date": "2021-10-08",
+        "event_url": "https://www.aclfestival.com/",
+        "user_id": "1"
+    }
+]

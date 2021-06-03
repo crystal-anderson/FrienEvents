@@ -113,4 +113,4 @@ if __name__ == '__main__':
 
 
 #TO DO
-#
+#SeedDatabase?! Change from 'import model' to 'from model import db'?

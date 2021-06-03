@@ -139,14 +139,4 @@ def get_users_events_by_event_id(event_id):
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)
-    
 
-#For database
-# create_user('cryssann@gmail.com', 'theusualpassword', 'snatchtart')
-# create_user('namesmadly@gmail.com', 'herusualpassword', 'namesmadly')
-# create_event('Austin City Limits', 'ACL Music Festival - Weekend 1', '2021-10-2', 'https://www.aclfestival.com/', '1')
-# create_event('Austin City Limits', 'ACL Music Festival - Weekend 2', '2021-10-8', 'https://www.aclfestival.com/', '1')
-# create_comment('1', '1', 'Very excited for music, beer, and rivers!', '2021-05-03')
-# create_users_events('1', '1')
-# create_users_events('1', '2')
-# create_users_events('2', '2')
