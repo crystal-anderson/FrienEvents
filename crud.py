@@ -37,7 +37,7 @@ def create_comment(user, event, comment, comment_date):
     comment = Comment(
         user=user,
         event=event,
-        comment=comment        
+        comment=comment,        
         comment_date=comment_date,
     )
 
