@@ -18,8 +18,8 @@ class User(db.Model):
     password = db.Column(db.String(20))
     name = db.Column(db.String(50))
 
-    comments = db.relationship('Comment')
-    events = db.relationship('Event')
+    comments = db.relationship('Comment', backref='users')
+    events = db.relationship('Event', backref='users')
 
     def __repr__(self):
         return f'<User || user_id={self.user_id} // name={self.name} // email={self.email}>'
@@ -60,7 +60,7 @@ class Event(db.Model):
     event_date = db.Column(db.DateTime)
     event_url = db.Column(db.String(200))
 
-    comments = db.relationship('Comment')
+    comments = db.relationship('Comment', backref='events')
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.user_id'),
                         nullable=False)
@@ -109,3 +109,4 @@ if __name__ == '__main__':
     q_users = User.query.all()
 
 #TO DO
+#check removing SQLAlchemy
