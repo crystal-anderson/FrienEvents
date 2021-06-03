@@ -1,12 +1,13 @@
 """Models for FrienEvents app."""
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from datetime import datetime
 
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     """A user."""
 
     __tablename__ = 'users'
@@ -21,7 +22,13 @@ class User(db.Model):
     comments = db.relationship('Comment', backref='users')
     events = db.relationship('Event', backref='users')
 
+    def get_id(self):
+        """Overrride UserMixin.get_id."""
+
+        return str(self.user_id)
+
     def __repr__(self):
+
         return f'<User || user_id={self.user_id} // name={self.name} // email={self.email}>'
 
 
@@ -66,7 +73,7 @@ class Event(db.Model):
                         nullable=False)
 
     def __repr__(self):
-        return f'<Event || event_id={self.event_id} // user_desc={self.usr_desc} // event_date={event_date}>'
+        return f'<Event || event_id={self.event_id} // user_desc={self.usr_desc} // event_date={self.event_date}>'
 
 
 class UserEvent(db.Model):
@@ -86,7 +93,7 @@ class UserEvent(db.Model):
                         nullable=False)
 
     def __repr__(self):
-        return f'<UserEvent || user_event_id={self.user.event_id}>'
+        return f'<UserEvent || user_event_id={self.user_id, self.event_id}>'
 
 def connect_to_db(flask_app, db_uri='postgresql:///frienevents', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri

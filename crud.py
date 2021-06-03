@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, connect_to_db
+from model import db, User, Comment, Event, UserEvent, connect_to_db
 
 
 def create_user(email, password, name):
@@ -14,7 +14,7 @@ def create_user(email, password, name):
     return user
 
 
-def create_event(usr_desc, site_title, event_date, event_url):
+def create_event(usr_desc, site_title, event_date, event_url, user_id):
     """Create and return a new event."""
 
 
@@ -23,6 +23,7 @@ def create_event(usr_desc, site_title, event_date, event_url):
         site_title=site_title,
         event_date=event_date,
         event_url=event_url,
+        user_id=user_id
     )
 
     db.session.add(event)
@@ -31,12 +32,12 @@ def create_event(usr_desc, site_title, event_date, event_url):
     return event
 
 
-def create_comment(user, event, comment, comment_date):
+def create_comment(user_id, event_id, comment, comment_date):
     """Create and return a new comment."""
 
     comment = Comment(
-        user=user,
-        event=event,
+        user_id=user_id,
+        event_id=event_id,
         comment=comment,        
         comment_date=comment_date,
     )
@@ -44,16 +45,16 @@ def create_comment(user, event, comment, comment_date):
     db.session.add(comment)
     db.session.commit()
 
-    return rating
+    return comment
 
 
-def create__users_events(user, event):
+def create_users_events(user_id, event_id):
     """Create and return a new users_events."""
 
 
     users_events = UserEvent(
-        user=user,
-        event=event,
+        user_id=user_id,
+        event_id=event_id,
     )
 
     db.session.add(users_events)
