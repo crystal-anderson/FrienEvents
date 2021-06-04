@@ -46,7 +46,7 @@ def create_event(usr_desc, site_title, event_date, event_url):
         usr_desc=usr_desc,
         site_title=site_title,
         event_date=event_date,
-        event_url=event_url
+        event_url=event_url,
     )
 
     db.session.add(event)
@@ -64,6 +64,7 @@ def get_event_by_id(event_id):
     """Return an event by primary key."""
 
     return Event.query.get(event_id)
+
 
 
 def create_comment(user_id, event_id, comment, comment_date):
