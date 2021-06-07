@@ -1,7 +1,7 @@
 """Server for FrienEvents app."""
 
 from flask import Flask, render_template, request, flash, session, redirect
-from model import connect_to_db
+from model import connect_to_db, User
 import crud
 
 from flask_login import LoginManager, login_user, login_required
@@ -41,11 +41,13 @@ def show_login_page():
 def handle_login():
     """Log user into application."""
 
-    username = request.form['username']
-    password = request.form['password']
+    username = request.form.get('username')
+    password = request.form.get('password')
+    user = crud.get_user_by_username(username)
 
     if password == crud.get_password_by_username(username):
         session['current_user'] = username
+        login_user(user)
         flash(f'Logged in as {username}')
         return redirect('/')
 
@@ -58,9 +60,17 @@ def handle_login():
 def register_user():
     """Register user to application."""
 
-    email = request.form['email']
-    username = request.form['username']
-    password = request.form['password']
+    email = request.form.get('email')
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    if get_user_by_email(email):
+        flash(f'Account already created with {email}')
+        return redirect('/login')
+
+    if get_user_by_username(username):
+        flash(f'Account already created with {username}')
+        return redirect('/login')
 
     crud.create_user(email, password, username)
     
@@ -72,9 +82,13 @@ def register_user():
 def calendar():
     """View calendar page."""
 
-    username = request.args.get('username')
-
-    return render_template('calendar.html', username=username)
+    if session.get('current_user'):
+        username = session['current_user']
+        user = crud.get_user_by_username(username)
+        return render_template('calendar.html', user=user)
+    
+    else:
+        return redirect('/login')
 
 
 if __name__ == '__main__':

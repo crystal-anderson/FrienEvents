@@ -4,16 +4,16 @@
 
 {% block content %}
 
-  <h2>FrienEvents Login Page</h2>
+  <h2>Login Page</h2>
   <p>Wanderlust come true!</p>
 
 
   <form action="/handle-login" method="POST">
     <label>Username:</label>
-    <input type="text" name="username">
+    <input type="text" name="username" required>
   
     <label>Password:</label>
-    <input type="text" name="password">
+    <input type="text" name="password" required>
   
     <input type="submit">
   </form>
@@ -25,13 +25,13 @@
     <form action="/register-user" method="POST">
 
       <label>Username:</label>
-      <input type="text" name="username">
+      <input type="text" name="username" required>
 
       <label>Password:</label>
-      <input type="text" name="password">
+      <input type="text" name="password" required>
 
       <label>Email:</label>
-      <input type="text" name="email">
+      <input type="text" name="email" required>
 
       <input type="submit">
     </form>

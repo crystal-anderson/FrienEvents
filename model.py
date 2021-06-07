@@ -15,9 +15,9 @@ class User(db.Model, UserMixin):
     user_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    email = db.Column(db.String, unique=True)
-    password = db.Column(db.String(20))
-    username = db.Column(db.String(20))
+    email = db.Column(db.String, unique=True, nullable=False)
+    password = db.Column(db.String(20), nullable=False)
+    username = db.Column(db.String(20), nullable=False)
 
     comments = db.relationship('Comment', backref='users')
 

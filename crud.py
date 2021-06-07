@@ -33,9 +33,9 @@ def get_user_by_email(email):
 
 
 def get_user_by_username(username):
-    """Return a user by email."""
+    """Return a user by username."""
 
-    return User.query.filter(User.username == username).all()
+    return User.query.filter(User.username == username).first()
 
 
 def get_password_by_username(username):
