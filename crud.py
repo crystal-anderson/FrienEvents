@@ -38,6 +38,14 @@ def get_user_by_username(username):
     return User.query.filter(User.username == username).all()
 
 
+def get_password_by_username(username):
+    """Return a password by username."""
+
+    username = User.query.filter(User.username == username).first()
+
+    return username.password
+
+
 def create_event(usr_desc, site_title, event_date, event_url):
     """Create and return a new event."""
 

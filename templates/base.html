@@ -1,17 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>
-      {% block title %}{% endblock %}
-    </title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>{% block title %}FrienEvents{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script src="http://code.jquery.com/jquery.js"></script>
+</head>
 
-    {% block head %}{% endblock %}
-  </head>
-  <body>
-    {% block body %}{% endblock %}
+<body>
 
-    {% block after_body %}{% endblock %}
-  </body>
+  <div class="header-links">
+    <a href="/calendar">Calendar</a>
+    <a href="/login">Login</a>
+  </div>
+
+  <h1>FrienEvents</h1>
+  {% block content %}
+  <!-- BODY CONTENT GOES HERE -->
+  {% endblock %}
+  <footer>Collaborating events with friends since 2021.</footer>
+</body>
 </html>

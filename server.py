@@ -18,7 +18,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -30,35 +29,52 @@ def homepage():
 
     return render_template('homepage.html')
 
-# /// THIS IS TO COME ///
-# @app.route("/login", methods=["POST"])
-# def login():
-#     username = request.form.get("username")
-#     password = request.form.get("password")
 
-#     user = User.query.filter_by(username=username).first()
+@app.route('/login')
+def show_login_page():
+    """View login page."""
 
-#     if user.password == password:
-#         login_user(user)
-
-#         flash("Logged in successfully!")
-
-#         return redirect("/dashboard")
-
-#     flash("Sorry try again.")
-#     return redirect("/")
+    return render_template('login.html')
 
 
-# /// NOT YET, BUT TO MAKE A LOGIN REQUIRED ///
-# @app.route("/calendar")
-# @login_required
-# def calendar():
-#     return render_template("calendar.html")
+@app.route('/handle-login', methods=['POST'])
+def handle_login():
+    """Log user into application."""
 
-# /// JINJA TEMPLATE FOR PAGE ///
-# {% if current_user.is_authenticated %}
-#   Hi there {{ current_user.first_name }}!
-# {% endif %}
+    username = request.form['username']
+    password = request.form['password']
+
+    if password == crud.get_password_by_username(username):
+        session['current_user'] = username
+        flash(f'Logged in as {username}')
+        return redirect('/')
+
+    else:
+        flash('Wrong password!')
+        return redirect('/login')
+
+
+@app.route('/register-user', methods=['POST'])
+def register_user():
+    """Register user to application."""
+
+    email = request.form['email']
+    username = request.form['username']
+    password = request.form['password']
+
+    crud.create_user(email, password, username)
+    
+    return redirect('/login')
+
+
+@app.route('/calendar')
+@login_required
+def calendar():
+    """View calendar page."""
+
+    username = request.args.get('username')
+
+    return render_template('calendar.html', username=username)
 
 
 if __name__ == '__main__':

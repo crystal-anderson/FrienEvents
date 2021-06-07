@@ -107,7 +107,3 @@ if __name__ == '__main__':
 
     connect_to_db(app)
 
-
-#TO DO
-#SeedDatabase?! Change from 'import model' to 'from model import db'?
-#Add comment key to Users_Events instead of User.
