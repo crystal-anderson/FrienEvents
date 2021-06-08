@@ -6,6 +6,48 @@
 
   <h2>Homepage</h2>
   <p>Wanderlust come true!</p>
+  <h3>Search By!</h3>
 
+  {% if current_user.is_authenticated %}   
+        Welcome, {{ current_user.username }} 
+  {% endif %}
+
+
+  <div class="container">
+  
+    <form method="GET" action="/search">
+
+    <h4>Keyword</h4>
+    <div class="form-group">
+      <input type="text" name="keyword" id="search-keyword">
+    </div>
+
+    <h4>Zipcode</h4>    
+    <div class="form-group">
+      <input type="number" name="zipcode" id="search-zipcode">
+    </div>
+
+    <h4>Radius</h4>        
+    <div class="form-group">
+      <input type="number" name="radius" id="search-radius">
+    </div>
+
+    <h4>Radius By</h4>        
+    <div class="form-group">
+      <input type="radio" name="unit" value="miles"> Miles
+      <input type="radio" name="unit" value="km"> Kilometers
+    </div>
+
+    <h4>Sort By</h4>    
+    <div class="form-group">
+      <input type="radio" name="sort" value="date,asc"> Date
+      <input type="radio" name="sort" value="distance,asc"> Distance
+      <input type="radio" name="sort" value="relevance,asc"> Relevance
+    </div>
+
+    <input type="submit" value="Look for events!">
+
+    </form>
+  </div>
 
 {% endblock %}
