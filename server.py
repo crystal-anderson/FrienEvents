@@ -54,12 +54,10 @@ def search_events():
     if enddate:
         start_end_datetime.append(enddate)
 
-    # if list is empty, don't add localStartEndDateTime arg...?
-    
     url = 'https://app.ticketmaster.com/discovery/v2/events'
     payload = {'apikey': API_KEY,
                'keyword': keyword,
-               'localStartEndDateTime': ', '.join(start_end_datetime),           
+               'localStartEndDateTime': ', '.join(start_end_datetime),
                'city': city,
                'stateCode': statecode,
                'sort': sort}
@@ -77,24 +75,24 @@ def search_events():
 def show_login_page():
     """View login page."""
 
-    if session.get('current_user'):
-        username = session['current_user']
-        user = crud.get_user_by_username(username)
-        flash(f'Already logged in as {username}')
-        return render_template('homepage.html', user=user)
+    # if session.get('current_user'):
+    #     username = session['current_user']
+    #     user = crud.get_user_by_username(username)
+    #     flash(f'Already logged in as {username}')
+    #     return redirect('homepage.html', user=user)
     
-    else:
-        return redirect('/login')
+    # else:
+    #     return render_template('login.html')
+    return render_template('login.html')
 
-
-@app.route("/logout", methods=["GET"])
+@app.route('/logout', methods=['GET'])
 @login_required
 def logout():
     """Logout the current user."""
 
     logout_user()
 
-    return render_template("login.html")
+    return render_template('login.html')
 
 
 @app.route('/handle-login', methods=['POST'])
@@ -113,7 +111,7 @@ def handle_login():
 
     else:
         flash('Wrong password!')
-        return redirect('/login')
+        return redirect('login.html')
 
 
 @app.route('/register-user', methods=['POST'])
@@ -126,15 +124,15 @@ def register_user():
 
     if crud.get_user_by_email(email):
         flash(f'Account already created with {email}')
-        return redirect('/login')
+        return redirect('login.html')
 
     if crud.get_user_by_username(username):
         flash(f'Account already created with {username}')
-        return redirect('/login')
+        return redirect('login.html')
 
     crud.create_user(email, password, username)
     
-    return redirect('/login')
+    return redirect('login.html')
 
 
 @app.route('/calendar')
@@ -148,7 +146,7 @@ def calendar():
         return render_template('calendar.html', user=user)
     
     else:
-        return redirect('/login')
+        return redirect('login.html')
 
 
 if __name__ == '__main__':
