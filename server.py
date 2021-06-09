@@ -6,8 +6,6 @@ import crud
 import os
 import requests
 
-from pprint import pformat
-
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 
 from jinja2 import StrictUndefined
@@ -42,19 +40,28 @@ def search_events():
     """Search for events."""
 
     keyword = request.args.get('keyword', '')
-   
-#    TODO verify these are valid arguments 
-    postalcode = request.args.get('zipcode', '')
-    radius = request.args.get('radius', '')
-    unit = request.args.get('unit', '')
-    sort = request.args.get('sort', '')
 
+#    TODO verify these are valid arguments 
+    city = request.args.get('city', '')
+    startdate = request.args.get('startdate', '')
+    enddate = request.args.get('enddate', '')
+    statecode = request.args.get('stateCode', '')
+    sort = request.args.get('sort', '')
+    
+    start_end_datetime = []
+    if startdate:
+        start_end_datetime.append(startdate)
+    if enddate:
+        start_end_datetime.append(enddate)
+
+    # if list is empty, don't add localStartEndDateTime arg...?
+    
     url = 'https://app.ticketmaster.com/discovery/v2/events'
     payload = {'apikey': API_KEY,
                'keyword': keyword,
-               'postalCode': postalcode,
-               'radius': radius,
-               'unit': unit,
+               'localStartEndDateTime': ', '.join(start_end_datetime),           
+               'city': city,
+               'stateCode': statecode,
                'sort': sort}
 
     response = requests.get(url, params=payload)

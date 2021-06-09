@@ -9,11 +9,11 @@
 
     <ul id="navigation">
         {% for event in events %}
-            <li>{{ event.name }}</li>
+          <br>
+          <li><a href="{{ event.url }}">{{ event.name }}</a></li>
+          <li>{{ event.dates.start.localDate }} at {{ event.dates.start.localTime }}</li>
+          </br>
         {% endfor %}
     </ul>
-
-
-
 
 {% endblock %}
