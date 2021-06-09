@@ -35,6 +35,73 @@ def homepage():
     return render_template('homepage.html')
 
 
+@app.route('/login')
+def show_login_page():
+    """View login page."""
+
+    # if session.get('current_user'):
+    #     username = session['current_user']
+    #     user = crud.get_user_by_username(username)
+    #     flash(f'Already logged in as {username}')
+    #     return redirect('homepage.html', user=user)
+    
+    # else:
+    #     return render_template('login.html')
+    return render_template('login.html')
+
+
+@app.route('/handle-login', methods=['POST'])
+def handle_login():
+    """Log user into application."""
+
+    username = request.form.get('username')
+    password = request.form.get('password')
+    user = crud.get_user_by_username(username)
+    user_id = crud.get_user_id_by_username(username)
+
+    if password == crud.get_password_by_username(username):
+        session['current_user'] = username
+        session['current_user_id'] = user_id
+        login_user(user)
+        flash(f'Logged in as {username}')
+        return redirect('/')
+
+    else:
+        flash('Wrong password!')
+        return redirect('login.html')
+
+
+@app.route('/logout', methods=['GET'])
+@login_required
+def logout():
+    """Logout the current user."""
+
+    logout_user()
+
+    return render_template('login.html')
+
+
+@app.route('/register-user', methods=['POST'])
+def register_user():
+    """Register user to application."""
+
+    email = request.form.get('email')
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    if crud.get_user_by_email(email):
+        flash(f'Account already created with {email}')
+        return redirect('login.html')
+
+    if crud.get_user_by_username(username):
+        flash(f'Account already created with {username}')
+        return redirect('login.html')
+
+    crud.create_user(email, password, username)
+    
+    return redirect('login.html')
+
+
 @app.route('/search')
 def search_events():
     """Search for events."""
@@ -71,72 +138,7 @@ def search_events():
     return render_template('search-results.html', events=events)
 
 
-@app.route('/login')
-def show_login_page():
-    """View login page."""
-
-    # if session.get('current_user'):
-    #     username = session['current_user']
-    #     user = crud.get_user_by_username(username)
-    #     flash(f'Already logged in as {username}')
-    #     return redirect('homepage.html', user=user)
-    
-    # else:
-    #     return render_template('login.html')
-    return render_template('login.html')
-
-@app.route('/logout', methods=['GET'])
-@login_required
-def logout():
-    """Logout the current user."""
-
-    logout_user()
-
-    return render_template('login.html')
-
-
-@app.route('/handle-login', methods=['POST'])
-def handle_login():
-    """Log user into application."""
-
-    username = request.form.get('username')
-    password = request.form.get('password')
-    user = crud.get_user_by_username(username)
-
-    if password == crud.get_password_by_username(username):
-        session['current_user'] = username
-        login_user(user)
-        flash(f'Logged in as {username}')
-        return redirect('/')
-
-    else:
-        flash('Wrong password!')
-        return redirect('login.html')
-
-
-@app.route('/register-user', methods=['POST'])
-def register_user():
-    """Register user to application."""
-
-    email = request.form.get('email')
-    username = request.form.get('username')
-    password = request.form.get('password')
-
-    if crud.get_user_by_email(email):
-        flash(f'Account already created with {email}')
-        return redirect('login.html')
-
-    if crud.get_user_by_username(username):
-        flash(f'Account already created with {username}')
-        return redirect('login.html')
-
-    crud.create_user(email, password, username)
-    
-    return redirect('login.html')
-
-
 @app.route('/calendar')
-@login_required
 def calendar():
     """View calendar page."""
 
@@ -147,6 +149,11 @@ def calendar():
     
     else:
         return redirect('login.html')
+
+
+@app.route('/addevent')
+def add_event():
+    """Add event from search event results to user calendar."""
 
 
 if __name__ == '__main__':

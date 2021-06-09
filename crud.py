@@ -31,6 +31,13 @@ def get_user_by_email(email):
 
     return User.query.filter(User.email == email).all()
 
+def get_user_id_by_username(username):
+    """Return a user id by username."""
+
+    username = User.query.filter(User.username == username).first()
+
+    return username.user_id
+
 
 def get_user_by_username(username):
     """Return a user by username."""

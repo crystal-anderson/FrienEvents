@@ -8,12 +8,16 @@
 <h2>Search Results</h2>
 
     <ul id="navigation">
+      <form method="POST" action="/addevent">
         {% for event in events %}
           <br>
+          <input type="checkbox" name="search-events-result" value="event">
           <li><a href="{{ event.url }}">{{ event.name }}</a></li>
           <li>{{ event.dates.start.localDate }} at {{ event.dates.start.localTime }}</li>
           </br>
         {% endfor %}
+        <button type="submit">Add to Calendar</button>
+      </form>
     </ul>
 
 {% endblock %}
