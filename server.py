@@ -61,7 +61,7 @@ def handle_login():
 
     if password == crud.get_password_by_username(username):
         session['current_user'] = username
-        session['current_user_id'] = user_id
+        session['user_id'] = user_id
         login_user(user)
         flash(f'Logged in as {username}')
         return redirect('/')
@@ -144,8 +144,12 @@ def calendar():
 
     if session.get('current_user'):
         username = session['current_user']
+        user_id = session['user_id']
         user = crud.get_user_by_username(username)
-        return render_template('calendar.html', user=user)
+        user_id = crud.get_user_id_by_username(username)
+        userevents = crud.get_users_events_by_user_id(user_id)
+
+        return render_template('calendar.html', user=user, user_id=user_id, userevents=userevents)
     
     else:
         return redirect('login.html')

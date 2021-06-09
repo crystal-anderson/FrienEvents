@@ -8,4 +8,11 @@
   <p>Wanderlust come true!</p>
   <p>Hi {{user.username}}!</p>
 
+
+  {% for event in userevents %}
+  <br>
+  <li>{{ event.user_desc }}</li>
+  </br>
+{% endfor %}
+
 {% endblock %}

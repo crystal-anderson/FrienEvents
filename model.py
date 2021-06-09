@@ -92,7 +92,7 @@ class UserEvent(db.Model):
     user_desc = db.Column(db.Text)
 
     def __repr__(self):
-        return f'<UserEvent || user_event_id={self.user_event_id} user_id={self.user_id} event_id={self.event_id} usr_desc={self.user_desc}>'
+        return f'<UserEvent || user_event_id={self.user_event_id} user_id={self.user_id} event_id={self.event_id} user_desc={self.user_desc}>'
 
 def connect_to_db(flask_app, db_uri='postgresql:///frienevents', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
