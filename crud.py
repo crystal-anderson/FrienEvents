@@ -46,12 +46,11 @@ def get_password_by_username(username):
     return username.password
 
 
-def create_event(usr_desc, site_title, event_date, event_url):
+def create_event(site_title, event_date, event_url):
     """Create and return a new event."""
 
 
     event = Event(
-        usr_desc=usr_desc,
         site_title=site_title,
         event_date=event_date,
         event_url=event_url,
@@ -106,13 +105,14 @@ def get_comments_by_event_id(event_id):
     return Comment.query.filter(Comment.event_id == event_id).all()
 
 
-def create_users_events(user_id, event_id):
+def create_users_events(user_id, event_id, user_desc):
     """Create and return a new users_events."""
 
 
     users_events = UserEvent(
         user_id=user_id,
         event_id=event_id,
+        user_desc=user_desc,
     )
 
     db.session.add(users_events)

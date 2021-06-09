@@ -63,7 +63,6 @@ class Event(db.Model):
     event_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    usr_desc = db.Column(db.Text)
     site_title = db.Column(db.String(50))
     event_date = db.Column(db.DateTime)
     event_url = db.Column(db.String(200))
@@ -71,7 +70,7 @@ class Event(db.Model):
     comments = db.relationship('Comment', backref='events')
 
     def __repr__(self):
-        return f'<Event || event_id={self.event_id} // user_desc={self.usr_desc} // event_date={self.event_date}>'
+        return f'<Event || event_id={self.event_id} // event_date={self.event_date}>'
 
 
 class UserEvent(db.Model):
@@ -90,8 +89,10 @@ class UserEvent(db.Model):
                         db.ForeignKey('events.event_id'),
                         nullable=False)
 
+    user_desc = db.Column(db.Text)
+
     def __repr__(self):
-        return f'<UserEvent || user_event_id={self.user_event_id} user_id={self.user_id} event_id={self.event_id}>'
+        return f'<UserEvent || user_event_id={self.user_event_id} user_id={self.user_id} event_id={self.event_id} usr_desc={self.user_desc}>'
 
 def connect_to_db(flask_app, db_uri='postgresql:///frienevents', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
