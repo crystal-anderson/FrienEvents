@@ -22,6 +22,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False)
 
     comments = db.relationship('Comment', backref='users')
+    calendar = db.relationship('Event', secondary='users_events', backref='users')
 
     def get_id(self):
         """Overrride UserMixin.get_id."""

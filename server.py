@@ -1,7 +1,7 @@
 """Server for FrienEvents app."""
 
 from flask import Flask, render_template, request, flash, session, redirect
-from model import connect_to_db, User
+from model import connect_to_db, User, db
 import crud
 import os
 import requests
@@ -144,7 +144,6 @@ def calendar():
     """View calendar page."""
 
     if session.get('current_user'):
-        # username = session['current_user']
         user = crud.get_user_by_username(session['current_user'])
         user_events = crud.get_users_events_by_user_id(user.user_id)
 
@@ -174,14 +173,16 @@ def add_event():
         event_data = []
         for evt in events_to_add:
             event_data.append(json.loads(evt))
-            
-        print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n{event_data}")
 
-        # Convert date strings into datetime objs
-        # Use dictionary to create `Event` objs
-        # put in db
 
-        return render_template('calendar.html', user=user)
+        for event in event_data:
+            new_event = crud.create_event(event["site_title"], event["event_date"], event["event_url"])
+            user.calendar.append(new_event)
+        
+        db.session.add(user)
+        db.session.commit()
+
+        return render_template('homepage.html')
     
     else:
         return redirect('login.html')
