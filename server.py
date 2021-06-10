@@ -143,13 +143,20 @@ def calendar():
     """View calendar page."""
 
     if session.get('current_user'):
-        username = session['current_user']
-        user_id = session['user_id']
-        user = crud.get_user_by_username(username)
-        user_id = crud.get_user_id_by_username(username)
-        userevents = crud.get_users_events_by_user_id(user_id)
+        # username = session['current_user']
+        user = crud.get_user_by_username(session['current_user'])
+        user_events = crud.get_users_events_by_user_id(user.user_id)
 
-        return render_template('calendar.html', user=user, user_id=user_id, userevents=userevents)
+        events_list = []
+
+        for user_event in user_events:
+            event = crud.get_event_by_id(user_event.event_id)
+
+            # TODO sort by date to new list
+
+            events_list.append({"title" : event.site_title, "date" : event.event_date, "url" : event.event_url, "desc" : user_event.user_desc})
+
+        return render_template('calendar.html', user=user,  events_list=events_list)
     
     else:
         return redirect('login.html')
