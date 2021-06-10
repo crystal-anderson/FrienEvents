@@ -5,6 +5,7 @@ from model import connect_to_db, User
 import crud
 import os
 import requests
+import json
 
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 
@@ -162,9 +163,28 @@ def calendar():
         return redirect('login.html')
 
 
-@app.route('/addevent')
+@app.route('/addevent', methods=['POST'])
 def add_event():
     """Add event from search event results to user calendar."""
+
+    if session.get('current_user'):
+        user = crud.get_user_by_username(session['current_user'])
+        
+        events_to_add = request.form.getlist('events-to-add')
+        event_data = []
+        for evt in events_to_add:
+            event_data.append(json.loads(evt))
+            
+        print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n{event_data}")
+
+        # Convert date strings into datetime objs
+        # Use dictionary to create `Event` objs
+        # put in db
+
+        return render_template('calendar.html', user=user)
+    
+    else:
+        return redirect('login.html')
 
 
 if __name__ == '__main__':
