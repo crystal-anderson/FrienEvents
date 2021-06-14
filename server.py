@@ -21,6 +21,7 @@ app.jinja_env.undefined = StrictUndefined
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+os.system('source secrets.sh')
 API_KEY = os.environ['TICKETMASTER_KEY']
 
 
@@ -33,21 +34,23 @@ def load_user(user_id):
 def homepage():
     """View homepage."""
 
-    if session.get('current_user'):
-        username = session['current_user']
-        user = crud.get_user_by_username(username)
-
     return render_template('homepage.html')
 
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    """View login page. Log user in."""
+
     form = LoginForm(request.form)
-    if form.validate():
+
+    if  request.method == 'POST' and form.validate():
         user = User.query.filter_by(username=form.username.data).first()
+       
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
+            flash('Logged in successfully.')
             return redirect('/')
+    
     return render_template('login.html', form=form)
 
 
@@ -56,9 +59,8 @@ def register():
     """User registration form."""
 
     form = RegistrationForm(request.form)
+    
     if request.method == 'POST' and form.validate():
-        user = User(username=form.username.data, email=form.email.data,
-                    password=form.password.data)
         crud.create_user(form.email.data, form.password.data, form.username.data)
         flash('Thanks for registering')
 
@@ -73,12 +75,35 @@ def logout():
     """Logout the current user."""
 
     logout_user()
-    if current_user.is_authenticated:
-        # prevent flashing automatically logged out message
-        del session['current_user']
-    flash('You have successfully logged yourself out.')
+
+    flash('You have successfully logged out.')
 
     return redirect('/')
+
+
+@app.route('/calendar')
+@login_required
+def calendar():
+    """View calendar page."""
+
+    if current_user.is_authenticated:
+        user = crud.get_user_by_username(current_user.username)
+        user_events = crud.get_users_events_by_user_id(user.user_id)
+
+        events_list = []
+
+        for user_event in user_events:
+            event = crud.get_event_by_id(user_event.event_id)
+
+            # TODO sort by date to new list
+            # SORT by date dictionary key value
+
+            events_list.append({"title" : event.site_title, "date" : event.event_date, "url" : event.event_url, "desc" : user_event.user_desc})
+
+        return render_template('calendar.html', user=user,  events_list=events_list)
+    
+    else:
+        return redirect('/')
 
 
 @app.route('/search')
@@ -86,13 +111,11 @@ def search_events():
     """Search for events."""
 
     keyword = request.args.get('keyword', '')
-
-#    TODO verify these are valid arguments 
     city = request.args.get('city', '')
     startdate = request.args.get('startdate', '')
     enddate = request.args.get('enddate', '')
     statecode = request.args.get('stateCode', '')
-    sort = request.args.get('sort', '')
+    sort = request.args.get('sort', 'date,desc')
     
     start_end_datetime = []
     if startdate:
@@ -103,7 +126,7 @@ def search_events():
     url = 'https://app.ticketmaster.com/discovery/v2/events'
     payload = {'apikey': API_KEY,
                'keyword': keyword,
-               'localStartEndDateTime': ', '.join(start_end_datetime),
+               'localStartEndDateTime': ', '.join(start_end_datetime), 
                'city': city,
                'stateCode': statecode,
                'sort': sort}
@@ -112,59 +135,32 @@ def search_events():
 
     data = response.json()
 
-    events = data["_embedded"]["events"]
+    if "_embedded" in data and "events" in data["_embedded"]:
+        #TODO change to prevent 20+ year search results.
+        return render_template('search-results.html', events=data["_embedded"]["events"])
 
-    return render_template('search-results.html', events=events)
-
-
-@app.route('/calendar')
-@login_required
-def calendar():
-    """View calendar page."""
-
-    if session.get('current_user'):
-        user = crud.get_user_by_username(session['current_user'])
-        user_events = crud.get_users_events_by_user_id(user.user_id)
-
-        events_list = []
-
-        for user_event in user_events:
-            event = crud.get_event_by_id(user_event.event_id)
-
-            # TODO sort by date to new list
-
-            events_list.append({"title" : event.site_title, "date" : event.event_date, "url" : event.event_url, "desc" : user_event.user_desc})
-
-        return render_template('calendar.html', user=user,  events_list=events_list)
-    
-    else:
-        return redirect('/')
+    flash('No results found. Update search criteria.')
+    return redirect('/')
 
 
 @app.route('/addevent', methods=['POST'])
 def add_event():
     """Add event from search event results to user calendar."""
 
-    if session.get('current_user'):
-        user = crud.get_user_by_username(session['current_user'])
-        
+    if current_user.is_authenticated:
+        user = crud.get_user_by_username(current_user.username)
         events_to_add = request.form.getlist('events-to-add')
-        event_data = []
+
         for evt in events_to_add:
-            event_data.append(json.loads(evt))
+            data = json.loads(evt)
+            event = crud.create_event(data["site_title"], data["event_date"], data["event_url"])
+            user.calendar.append(event)
+            db.session.commit()      
 
-
-        for event in event_data:
-            new_event = crud.create_event(event["site_title"], event["event_date"], event["event_url"])
-            user.calendar.append(new_event)
-        
-        db.session.add(user)
-        db.session.commit()
-
-        return render_template('homepage.html')
+        return redirect ('calendar') #TODO update to add event
     
     else:
-        return redirect('login.html')
+        return redirect('/login')
 
 
 if __name__ == '__main__':

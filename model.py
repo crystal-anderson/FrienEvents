@@ -42,7 +42,8 @@ class User(db.Model, UserMixin):
 
         return str(self.user_id)
     
-    def __init__(self, username, password):
+    def __init__(self, email, username, password):
+        self.email = email
         self.username = username
         self.password = password
 

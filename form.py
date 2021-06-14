@@ -20,7 +20,6 @@ class LoginForm(Form):
     username = TextField('username',
             validators=[DataRequired(), Length(1, 64)])
     password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Keep me logged in')
     submit = SubmitField('Log In')
 
     def __init__(self, *args, **kwargs):

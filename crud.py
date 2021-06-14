@@ -65,7 +65,6 @@ def create_event(site_title, event_date, event_url):
 
     db.session.add(event)
     db.session.commit()
-
     return event
 
 def get_events():

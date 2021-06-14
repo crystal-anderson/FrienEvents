@@ -7,20 +7,20 @@
 
 <h2>Search Results</h2>
 
-<ul id="navigation">
-  <form method="POST" action="/addevent">
-    {% for event in events %}
 
-    <br>
+<form method="POST" action="/addevent">
+  {% for event in events %}
 
-    {% set event_json = {'site_title': event.name, 'event_date': event.dates.start.dateTime, 'event_url': event.url} %}
-    <input type="checkbox" name="events-to-add" value='{{ event_json | tojson }}'>
-    <li><a href="{{ event.url }}">{{ event.name }}</a></li>
-    <li>{{ event.dates.start.localDate }} at {{ event.dates.start.localTime }}</li>
-    </br>
-    {% endfor %}
-    <button type="submit">Add to Calendar</button>
-  </form>
-</ul>
+  <br>
+
+  {% set event_json = {'site_title': event.name, 'event_date': event.dates.start.dateTime, 'event_url': event.url} %}
+  <input type="checkbox" name="events-to-add" value='{{ event_json | tojson }}'>
+  <li><a href="{{ event.url }}">{{ event.name }}</a></li>
+  <li>{{ event.dates.start.localDate }} at {{ event.dates.start.localTime }}</li>
+  </br>
+  {% endfor %}
+  <button type="submit">Add to Calendar</button>
+</form>
+
 
 {% endblock %}
