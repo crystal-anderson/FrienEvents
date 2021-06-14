@@ -1,13 +1,15 @@
 """Server for FrienEvents app."""
 
-from flask import Flask, render_template, request, flash, session, redirect
-from model import connect_to_db, User, db
+from flask import Flask, redirect, render_template, request, flash, session
+from model import connect_to_db, db, User
+from form import RegistrationForm, LoginForm
 import crud
 import os
 import requests
 import json
 
-from flask_login import LoginManager, login_user, current_user, login_required, logout_user
+from wtforms import Form, BooleanField, StringField, validators
+from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 
 from jinja2 import StrictUndefined
 
@@ -16,10 +18,8 @@ app = Flask(__name__)
 app.secret_key = 'frieneventsdev'
 app.jinja_env.undefined = StrictUndefined
 
-
 login_manager = LoginManager()
 login_manager.init_app(app)
-
 
 API_KEY = os.environ['TICKETMASTER_KEY']
 
@@ -33,74 +33,52 @@ def load_user(user_id):
 def homepage():
     """View homepage."""
 
+    if session.get('current_user'):
+        username = session['current_user']
+        user = crud.get_user_by_username(username)
+
     return render_template('homepage.html')
 
 
-@app.route('/login')
-def show_login_page():
-    """View login page."""
-
-    # if session.get('current_user'):
-    #     username = session['current_user']
-    #     user = crud.get_user_by_username(username)
-    #     flash(f'Already logged in as {username}')
-    #     return redirect('homepage.html', user=user)
-    
-    # else:
-    #     return render_template('login.html')
-    return render_template('login.html')
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    form = LoginForm(request.form)
+    if form.validate():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is not None and user.verify_password(form.password.data):
+            login_user(user)
+            return redirect('/')
+    return render_template('login.html', form=form)
 
 
-@app.route('/handle-login', methods=['POST'])
-def handle_login():
-    """Log user into application."""
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    """User registration form."""
 
-    username = request.form.get('username')
-    password = request.form.get('password')
-    user = crud.get_user_by_username(username)
-    user_id = crud.get_user_id_by_username(username)
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user = User(username=form.username.data, email=form.email.data,
+                    password=form.password.data)
+        crud.create_user(form.email.data, form.password.data, form.username.data)
+        flash('Thanks for registering')
 
-    if password == crud.get_password_by_username(username):
-        session['current_user'] = username
-        session['user_id'] = user_id
-        login_user(user)
-        flash(f'Logged in as {username}')
-        return redirect('/')
+        return redirect('login')
 
-    else:
-        flash('Wrong password!')
-        return redirect('login.html')
+    return render_template('register.html', form=form)
 
 
-@app.route('/logout', methods=['GET'])
+@app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     """Logout the current user."""
 
     logout_user()
+    if current_user.is_authenticated:
+        # prevent flashing automatically logged out message
+        del session['current_user']
+    flash('You have successfully logged yourself out.')
 
-    return render_template('login.html')
-
-
-@app.route('/register-user', methods=['POST'])
-def register_user():
-    """Register user to application."""
-
-    email = request.form.get('email')
-    username = request.form.get('username')
-    password = request.form.get('password')
-
-    if crud.get_user_by_email(email):
-        flash(f'Account already created with {email}')
-        return redirect('login.html')
-
-    if crud.get_user_by_username(username):
-        flash(f'Account already created with {username}')
-        return redirect('login.html')
-
-    crud.create_user(email, password, username)
-    
-    return redirect('login.html')
+    return redirect('/')
 
 
 @app.route('/search')
@@ -140,6 +118,7 @@ def search_events():
 
 
 @app.route('/calendar')
+@login_required
 def calendar():
     """View calendar page."""
 
@@ -159,7 +138,7 @@ def calendar():
         return render_template('calendar.html', user=user,  events_list=events_list)
     
     else:
-        return redirect('login.html')
+        return redirect('/')
 
 
 @app.route('/addevent', methods=['POST'])

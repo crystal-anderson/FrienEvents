@@ -3,6 +3,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from datetime import datetime
+from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 
 db = SQLAlchemy()
@@ -24,10 +25,26 @@ class User(db.Model, UserMixin):
     comments = db.relationship('Comment', backref='users')
     calendar = db.relationship('Event', secondary='users_events', backref='users')
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+    
+    def is_anonymous(self):
+        return True
+    
+    def verify_password(self, password):
+        return (password)
+
     def get_id(self):
         """Overrride UserMixin.get_id."""
 
         return str(self.user_id)
+    
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
 
     def __repr__(self):
 
@@ -64,7 +81,7 @@ class Event(db.Model):
     event_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    site_title = db.Column(db.String(50))
+    site_title = db.Column(db.String(100))
     event_date = db.Column(db.DateTime)
     event_url = db.Column(db.String(200))
 

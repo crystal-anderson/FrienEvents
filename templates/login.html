@@ -6,35 +6,18 @@
 
   <h2>Login Page</h2>
   <p>Wanderlust come true!</p>
-
-
-  <form action="/handle-login" method="POST">
-    <label>Username:</label>
-    <input type="text" name="username" required>
   
-    <label>Password:</label>
-    <input type="text" name="password" required>
-  
-    <input type="submit">
+
+  <h1>LOGIN</h1>
+
+  {% from "_formhelpers.html" import render_field %}
+  <form id="loginForm" class="form form-register" method="POST" action="" role="form">
+      {{ render_field(form.username, placeholder="username") }}<br>
+      {{ render_field(form.password, placeholder="password") }}<br>
+      <p><input class="btn btn-default btn-submit" type="submit" value="Login"></p>
   </form>
-
-
-  <br></br>
-  <h3>Register Here!</h3>
-  <p>
-    <form action="/register-user" method="POST">
-
-      <label>Username:</label>
-      <input type="text" name="username" required>
-
-      <label>Password:</label>
-      <input type="text" name="password" required>
-
-      <label>Email:</label>
-      <input type="text" name="email" required>
-
-      <input type="submit">
-    </form>
-  </p>
+  
+  <a href="/">index</a><br>
+  <a href="/register">register</a><br>
 
 {% endblock %}
