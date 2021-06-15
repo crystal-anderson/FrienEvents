@@ -22,14 +22,9 @@ document.addEventListener('DOMContentLoaded', function() {
         url: "/calendar.json",
         success: function(res) {
 
-        calendar.addEvent({id: '1', title: 'HI', start: '2021-06-19'});
-
-        for (i = 0; i < res.length; i++) {
-            calendar.addEvent(res[i]);
-            console.log(res[i]);
-        }
-        // console.log("YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-        calendar.render();
+            for (var i = 0; i < res.length; i++) {
+                calendar.addEvent(res[i]);
+            }
         } 
     });
 });
