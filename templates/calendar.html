@@ -8,14 +8,19 @@
   <p>Wanderlust come true!</p>
   <p>Hi {{user.username}}!</p>
 
+    
+  <html lang='en'>
+    <head>
+      <meta charset='utf-8' />
+      <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.7.2/main.min.css' rel='stylesheet'/>
+      <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.7.2/main.min.js'></script>
+      <script src="/static/js/calendar.js"></script>
+    </head>
+  
+    <body>
+      <div id='calendar'></div>
+    </body>
+  </html>
+  
 
-  {% for event in events_list %}
-  <p>
-    <li>{{ event.title }}
-    <br>Description: {{ event.desc }}
-    <br>Date: {{ event.date }} 
-    <br>Link: {{ event.url }} </li>
-  </p>
-  {% endfor %}
-
-{% endblock %}
+  {% endblock %}

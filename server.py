@@ -1,6 +1,6 @@
 """Server for FrienEvents app."""
 
-from flask import Flask, redirect, render_template, request, flash, session
+from flask import Flask, redirect, render_template, request, flash, session, jsonify
 from model import connect_to_db, db, User
 from form import RegistrationForm, LoginForm
 import crud
@@ -64,7 +64,7 @@ def register():
         crud.create_user(form.email.data, form.password.data, form.username.data)
         flash('Thanks for registering')
 
-        return redirect('login')
+        return redirect('/login')
 
     return render_template('register.html', form=form)
 
@@ -79,31 +79,6 @@ def logout():
     flash('You have successfully logged out.')
 
     return redirect('/')
-
-
-@app.route('/calendar')
-@login_required
-def calendar():
-    """View calendar page."""
-
-    if current_user.is_authenticated:
-        user = crud.get_user_by_username(current_user.username)
-        user_events = crud.get_users_events_by_user_id(user.user_id)
-
-        events_list = []
-
-        for user_event in user_events:
-            event = crud.get_event_by_id(user_event.event_id)
-
-            # TODO sort by date to new list
-            # SORT by date dictionary key value
-
-            events_list.append({"title" : event.site_title, "date" : event.event_date, "url" : event.event_url, "desc" : user_event.user_desc})
-
-        return render_template('calendar.html', user=user,  events_list=events_list)
-    
-    else:
-        return redirect('/')
 
 
 @app.route('/search')
@@ -136,7 +111,7 @@ def search_events():
     data = response.json()
 
     if "_embedded" in data and "events" in data["_embedded"]:
-        #TODO change to prevent 20+ year search results.
+
         return render_template('search-results.html', events=data["_embedded"]["events"])
 
     flash('No results found. Update search criteria.')
@@ -161,6 +136,41 @@ def add_event():
     
     else:
         return redirect('/login')
+
+
+@app.route('/calendar')
+@login_required
+def calendar():
+    """View calendar page."""
+
+    if current_user.is_authenticated:
+        user = crud.get_user_by_username(current_user.username)
+        
+        return render_template('calendar.html', user=user)
+    
+    else:
+        return redirect('/')
+
+
+@app.route('/calendar.json', methods=['POST'])
+def calendar_test():
+    """View test calendar page."""
+
+    events_list = []
+
+    if current_user.is_authenticated:
+        user = crud.get_user_by_username(current_user.username)
+        user_events = crud.get_users_events_by_user_id(user.user_id)
+
+        for user_event in user_events:
+            event = crud.get_event_by_id(user_event.event_id)
+            events_list.append({
+                "title" : event.site_title, 
+                "start" : event.event_date.isoformat(), 
+                "url" : event.event_url
+                })
+
+    return jsonify(events_list)
 
 
 if __name__ == '__main__':
