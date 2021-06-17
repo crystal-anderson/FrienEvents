@@ -81,24 +81,6 @@ def logout():
     return redirect('/')
 
 
-@app.route('/user-search', methods=['GET', 'POST'])
-def user_search():
-    """User search"""
-
-    form = UserSearchForm(request.form)
-    if request.method == 'POST':
-        user_results = User.query.filter_by(username=form.username.data).all()
-        if not user_results:
-            flash('No results found!')
-            return redirect('/user-search')
-        
-        else:
-            return render_template('user-results.html', user_results=user_results)
-    
-
-    return render_template('user-search.html', form=form)
-
-
 @app.route('/search')
 def search_events():
     """Search for events."""
@@ -170,23 +152,39 @@ def calendar():
         return redirect('/')
 
 
-@app.route('/calendar.json', methods=['POST'])
-def calendar_test():
+@app.route('/user-search', methods=['GET', 'POST'])
+def user_search():
+    """User search"""
+
+    form = UserSearchForm(request.form)
+    if request.method == 'POST':
+        user = User.query.filter_by(username=form.username.data).first()
+        
+        if not user:
+            flash('No results found!')
+            return redirect('/user-search')
+        
+        else:
+            return render_template('calendar.html', user=user)
+
+    return render_template('user-search.html', form=form)
+
+
+@app.route('/calendar.json/<user_id>', methods=['POST'])
+def search_calendar_view(user_id):
     """View test calendar page."""
 
     events_list = []
 
-    if current_user.is_authenticated:
-        user = crud.get_user_by_username(current_user.username)
-        user_events = crud.get_users_events_by_user_id(user.user_id)
+    user_events = crud.get_users_events_by_user_id(user_id)
 
-        for user_event in user_events:
-            event = crud.get_event_by_id(user_event.event_id)
-            events_list.append({
-                "title" : event.site_title, 
-                "start" : event.event_date.isoformat(), 
-                "url" : event.event_url
-                })
+    for user_event in user_events:
+        event = crud.get_event_by_id(user_event.event_id)
+        events_list.append({
+            "title" : event.site_title, 
+            "start" : event.event_date.isoformat(), 
+            "url" : event.event_url
+            })
 
     return jsonify(events_list)
 

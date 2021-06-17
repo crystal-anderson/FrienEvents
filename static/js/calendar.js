@@ -1,4 +1,3 @@
-
 'use strict';
    
 document.addEventListener('DOMContentLoaded', function() {
@@ -19,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // TODO Breakout into utility function if needed
     $.ajax({
         type: "POST",
-        url: "/calendar.json",
+        url: "/calendar.json/" + calendarEl.dataset.userId,
         success: function(res) {
 
             for (var i = 0; i < res.length; i++) {

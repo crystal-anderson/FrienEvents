@@ -6,7 +6,7 @@
 
   <h2>Calendar Page</h2>
   <p>Wanderlust come true!</p>
-  <p>Hi {{user.username}}!</p>
+  <p>Showing {{user.username}} Calendar!</p>
 
     
   <html lang='en'>
@@ -18,7 +18,7 @@
     </head>
   
     <body>
-      <div id='calendar'></div>
+      <div id='calendar' data-user-id={{user.user_id}}></div>
     </body>
   </html>
   
