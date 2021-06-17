@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}FrienEvents{% endblock %}
+
+{% block content %}
+
+  <h2>User Search Result Page</h2>
+  <p>Wanderlust come true!</p>
+
+<div>
+  {% from "_formhelpers.html" import render_field %}
+  <form method="POST">
+    <dl>
+      {{ render_field(form.username, placeholder="username") }}
+    </dl>
+    <p><input type=submit value="User Search">
+  </form>
+</div>
+
+{% endblock %}

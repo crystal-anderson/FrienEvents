@@ -18,7 +18,7 @@ class RegistrationForm(Form):
 
 
 class LoginForm(Form):
-    username = TextField('username',
+    username = TextField('Username',
             validators=[DataRequired(), Length(1, 64)])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
@@ -38,3 +38,9 @@ class LoginForm(Form):
             self.password.errors.append('Invalid password')
             return False
         return True
+
+class UserSearchForm(Form):
+    username = StringField('',
+            validators=[DataRequired(), Length(1, 64)])
+    submit = SubmitField('User Search')
+    

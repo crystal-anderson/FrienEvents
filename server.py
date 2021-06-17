@@ -2,7 +2,7 @@
 
 from flask import Flask, redirect, render_template, request, flash, session, jsonify
 from model import connect_to_db, db, User
-from form import RegistrationForm, LoginForm
+from form import RegistrationForm, LoginForm, UserSearchForm
 import crud
 import os
 import requests
@@ -32,12 +32,12 @@ def load_user(user_id):
 
 @app.route('/')
 def homepage():
-    """View homepage."""
+    """View homepage with event search form."""
 
     return render_template('homepage.html')
 
 
-@app.route('/login', methods=["GET", "POST"])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     """View login page. Log user in."""
 
@@ -79,6 +79,24 @@ def logout():
     flash('You have successfully logged out.')
 
     return redirect('/')
+
+
+@app.route('/user-search', methods=['GET', 'POST'])
+def user_search():
+    """User search"""
+
+    form = UserSearchForm(request.form)
+    if request.method == 'POST':
+        user_results = User.query.filter_by(username=form.username.data).all()
+        if not user_results:
+            flash('No results found!')
+            return redirect('/user-search')
+        
+        else:
+            return render_template('user-results.html', user_results=user_results)
+    
+
+    return render_template('user-search.html', form=form)
 
 
 @app.route('/search')
