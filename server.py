@@ -152,6 +152,25 @@ def calendar():
         return redirect('/')
 
 
+@app.route('/calendar.json/<user_id>', methods=['POST'])
+def calendar_data(user_id):
+    """Data format to render calendar."""
+
+    events_list = []
+
+    user_events = crud.get_users_events_by_user_id(user_id)
+
+    for user_event in user_events:
+        event = crud.get_event_by_id(user_event.event_id)
+        events_list.append({
+            "title" : event.site_title, 
+            "start" : event.event_date.isoformat(), 
+            "url" : event.event_url
+            })
+
+    return jsonify(events_list)
+
+
 @app.route('/user-search', methods=['GET', 'POST'])
 def user_search():
     """User search"""
@@ -168,25 +187,6 @@ def user_search():
             return render_template('calendar.html', user=user)
 
     return render_template('user-search.html', form=form)
-
-
-@app.route('/calendar.json/<user_id>', methods=['POST'])
-def search_calendar_view(user_id):
-    """View test calendar page."""
-
-    events_list = []
-
-    user_events = crud.get_users_events_by_user_id(user_id)
-
-    for user_event in user_events:
-        event = crud.get_event_by_id(user_event.event_id)
-        events_list.append({
-            "title" : event.site_title, 
-            "start" : event.event_date.isoformat(), 
-            "url" : event.event_url
-            })
-
-    return jsonify(events_list)
 
 
 if __name__ == '__main__':
