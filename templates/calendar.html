@@ -8,17 +8,22 @@
   <p>Wanderlust come true!</p>
   <p>Showing {{user.username}} Calendar!</p>
 
+
+
+
+
     
   <html lang='en'>
     <head>
       <meta charset='utf-8' />
       <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.7.2/main.min.css' rel='stylesheet'/>
       <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.7.2/main.min.js'></script>
-      <script src="/static/js/calendar.js"></script>
+      
     </head>
   
     <body>
       <div id='calendar' data-user-id={{user.user_id}}></div>
+      <script src="/static/js/calendar.js"></script>
     </body>
   </html>
   

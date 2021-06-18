@@ -6,6 +6,8 @@ from model import User
 
 
 class RegistrationForm(Form):
+    """Registration form referenced on register template and register server route."""
+
     username = StringField('Username', [validators.Length(min=4, max=25)])
     email = StringField('Email Address', [validators.Length(min=6, max=35)])
     password = PasswordField('New Password', [
@@ -16,8 +18,9 @@ class RegistrationForm(Form):
     accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
 
 
-
 class LoginForm(Form):
+    """Login form referenced on login template and login server route."""
+
     username = TextField('Username',
             validators=[DataRequired(), Length(1, 64)])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -40,6 +43,8 @@ class LoginForm(Form):
         return True
 
 class UserSearchForm(Form):
+    """User Search form referenced on user-search template and user-search server route."""
+
     username = StringField('',
             validators=[DataRequired(), Length(1, 64)])
     submit = SubmitField('User Search')

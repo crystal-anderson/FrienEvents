@@ -134,15 +134,26 @@ def get_users_events():
 
 
 def get_users_events_by_user_id(user_id):
-    """Return events by users primary key."""
+    """Return users events by user primary key."""
 
     return UserEvent.query.filter(UserEvent.user_id == user_id).all()
+
+
+def get_users_event_ids_by_user_id(user_id):
+    """Return users events id's by users primary key."""
+
+    return [e.user_event_id for e in UserEvent.query.filter(UserEvent.user_id == user_id).all() if True]
 
 def get_users_events_by_event_id(event_id):
     """Return events by events primary key."""
 
     return UserEvent.query.filter(UserEvent.event_id == event_id ).all()
 
+def remove_users_events_by_event_id(event_id):
+    """Remove event from users events table by event id."""
+
+    db.session.delete(UserEvent.query.filter(UserEvent.user_event_id == event_id).one())
+    db.session.commit()
 
 if __name__ == '__main__':
     from server import app

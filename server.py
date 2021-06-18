@@ -118,23 +118,36 @@ def search_events():
     return redirect('/')
 
 
-@app.route('/addevent', methods=['POST'])
+@app.route('/add-event', methods=['POST'])
 def add_event():
     """Add event from search event results to user calendar."""
 
     if current_user.is_authenticated:
-        user = crud.get_user_by_username(current_user.username)
         events_to_add = request.form.getlist('events-to-add')
 
         for evt in events_to_add:
             data = json.loads(evt)
             event = crud.create_event(data["site_title"], data["event_date"], data["event_url"])
-            user.calendar.append(event)
+            current_user.calendar.append(event)
             db.session.commit()      
 
-        return redirect ('calendar') #TODO update to add event
+        return redirect ('/calendar')
     
     else:
+        return redirect('/login')
+
+@app.route('/remove-event/<event_id>', methods=['POST'])
+def remove_event(event_id):
+    """Add event from search event results to user calendar."""
+
+    if current_user.is_authenticated and int(event_id) in crud.get_users_event_ids_by_user_id(current_user.user_id):
+
+        crud.remove_users_events_by_event_id(event_id)    
+
+        return redirect ('calendar')
+    
+    else:
+        flash("Hi, if you'd like to remove and event please login and make sure it is your event")
         return redirect('/login')
 
 
@@ -154,7 +167,7 @@ def calendar():
 
 @app.route('/calendar.json/<user_id>', methods=['POST'])
 def calendar_data(user_id):
-    """Data format to render calendar."""
+    """Json data format to render calendar."""
 
     events_list = []
 
@@ -165,7 +178,8 @@ def calendar_data(user_id):
         events_list.append({
             "title" : event.site_title, 
             "start" : event.event_date.isoformat(), 
-            "url" : event.event_url
+            "url" : event.event_url,
+            "user_event_id" : user_event.user_event_id
             })
 
     return jsonify(events_list)
