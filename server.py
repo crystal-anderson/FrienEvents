@@ -128,7 +128,7 @@ def add_event():
         for evt in events_to_add:
             data = json.loads(evt)
             event = crud.create_event(data["site_title"], data["event_date"], data["event_url"])
-            current_user.calendar.append(event)
+            current_user.events.append(event)
             db.session.commit()
 
         return redirect ('/calendar')
