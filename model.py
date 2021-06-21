@@ -23,17 +23,17 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False)
 
     comments = db.relationship('Comment', backref='users')
-    calendar = db.relationship('Event', secondary='users_events', backref='users')
+    events = db.relationship('Event', secondary='users_events', backref='users')
 
     def is_authenticated(self):
         return True
 
     def is_active(self):
         return True
-    
+
     def is_anonymous(self):
         return True
-    
+
     def verify_password(self, password):
         return (password)
 
@@ -41,7 +41,7 @@ class User(db.Model, UserMixin):
         """Overrride UserMixin.get_id."""
 
         return str(self.user_id)
-    
+
     def __init__(self, email, username, password):
         self.email = email
         self.username = username
@@ -100,7 +100,7 @@ class UserEvent(db.Model):
     user_event_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    
+
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.user_id'),
                         nullable=False)
@@ -109,6 +109,8 @@ class UserEvent(db.Model):
                         nullable=False)
 
     user_desc = db.Column(db.Text)
+
+    event = db.relationship('Event', backref="user_events")
 
     def __repr__(self):
         return f'<UserEvent || user_event_id={self.user_event_id} user_id={self.user_id} event_id={self.event_id} user_desc={self.user_desc}>'

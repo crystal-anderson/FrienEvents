@@ -1,7 +1,7 @@
 """Server for FrienEvents app."""
 
 from flask import Flask, redirect, render_template, request, flash, session, jsonify
-from model import connect_to_db, db, User
+from model import connect_to_db, db, User, Event
 from form import RegistrationForm, LoginForm, UserSearchForm
 import crud
 import os
@@ -45,12 +45,12 @@ def login():
 
     if  request.method == 'POST' and form.validate():
         user = User.query.filter_by(username=form.username.data).first()
-       
+
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
             flash('Logged in successfully.')
             return redirect('/')
-    
+
     return render_template('login.html', form=form)
 
 
@@ -59,7 +59,7 @@ def register():
     """User registration form."""
 
     form = RegistrationForm(request.form)
-    
+
     if request.method == 'POST' and form.validate():
         crud.create_user(form.email.data, form.password.data, form.username.data)
         flash('Thanks for registering')
@@ -91,7 +91,7 @@ def search_events():
     enddate = request.args.get('enddate', '')
     statecode = request.args.get('stateCode', '')
     sort = request.args.get('sort', 'date,desc')
-    
+
     start_end_datetime = []
     if startdate:
         start_end_datetime.append(startdate)
@@ -101,7 +101,7 @@ def search_events():
     url = 'https://app.ticketmaster.com/discovery/v2/events'
     payload = {'apikey': API_KEY,
                'keyword': keyword,
-               'localStartEndDateTime': ', '.join(start_end_datetime), 
+               'localStartEndDateTime': ', '.join(start_end_datetime),
                'city': city,
                'stateCode': statecode,
                'sort': sort}
@@ -129,26 +129,34 @@ def add_event():
             data = json.loads(evt)
             event = crud.create_event(data["site_title"], data["event_date"], data["event_url"])
             current_user.calendar.append(event)
-            db.session.commit()      
+            db.session.commit()
 
         return redirect ('/calendar')
-    
+
     else:
         return redirect('/login')
 
-@app.route('/remove-event/<event_id>', methods=['POST'])
+
+@app.route('/api/remove-event/<int:event_id>', methods=['POST'])
 def remove_event(event_id):
     """Add event from search event results to user calendar."""
 
-    if current_user.is_authenticated and int(event_id) in crud.get_users_event_ids_by_user_id(current_user.user_id):
+    # Get event to loop over associated user_events
+    event = Event.query.get(event_id)
 
-        crud.remove_users_events_by_event_id(event_id)    
+    for user_event in event.user_events:
+        print(f"CHECKING event {user_event}")
 
-        return redirect ('calendar')
-    
-    else:
-        flash("Hi, if you'd like to remove and event please login and make sure it is your event")
-        return redirect('/login')
+        if user_event.user_id == current_user.user_id:
+            print(f"DELETING user event {user_event}")
+            db.session.delete(user_event)
+            db.session.commit()
+
+            return f"Removed user_event with ID: {user_event.user_event_id} for event {event_id}"
+
+    print(f"COULDN'T FIND EVENT TO DELETE :(")
+
+    return "Error"
 
 
 @app.route('/calendar')
@@ -158,29 +166,28 @@ def calendar():
 
     if current_user.is_authenticated:
         user = crud.get_user_by_username(current_user.username)
-        
+
         return render_template('calendar.html', user=user)
-    
+
     else:
         return redirect('/')
 
 
-@app.route('/calendar.json/<user_id>', methods=['POST'])
-def calendar_data(user_id):
+@app.route('/api/user/<user_id>/events')
+def get_users_events(user_id):
     """Json data format to render calendar."""
 
     events_list = []
+    user = crud.get_user_by_id(user_id)
 
-    user_events = crud.get_users_events_by_user_id(user_id)
-
-    for user_event in user_events:
-        event = crud.get_event_by_id(user_event.event_id)
+    for event in user.events:
         events_list.append({
-            "title" : event.site_title, 
-            "start" : event.event_date.isoformat(), 
+            "event_id": event.event_id,
+            "title" : event.site_title,
+            "start" : event.event_date.isoformat(),
             "url" : event.event_url,
-            "user_event_id" : user_event.user_event_id
-            })
+            # "description": event.user_events[0].user_desc
+        })
 
     return jsonify(events_list)
 
@@ -192,11 +199,11 @@ def user_search():
     form = UserSearchForm(request.form)
     if request.method == 'POST':
         user = User.query.filter_by(username=form.username.data).first()
-        
+
         if not user:
             flash('No results found!')
             return redirect('/user-search')
-        
+
         else:
             return render_template('calendar.html', user=user)
 
@@ -206,4 +213,3 @@ def user_search():
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(host='0.0.0.0', debug=True)
-    

@@ -86,7 +86,7 @@ def create_comment(user_id, event_id, comment, comment_date):
     comment = Comment(
         user_id=user_id,
         event_id=event_id,
-        comment=comment,        
+        comment=comment,
         comment_date=comment_date,
     )
 
@@ -149,10 +149,14 @@ def get_users_events_by_event_id(event_id):
 
     return UserEvent.query.filter(UserEvent.event_id == event_id ).all()
 
-def remove_users_events_by_event_id(event_id):
+def remove_users_events_by_event_id(user_id, event_id):
     """Remove event from users events table by event id."""
 
-    db.session.delete(UserEvent.query.filter(UserEvent.user_event_id == event_id).one())
+    db.session.delete(UserEvent.query.filter(
+        UserEvent.user_id == user_id
+    ).filter(
+        UserEvent.event_id == event_id
+    ).one())
     db.session.commit()
 
 if __name__ == '__main__':
