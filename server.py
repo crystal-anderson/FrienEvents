@@ -167,7 +167,7 @@ def calendar():
     if current_user.is_authenticated:
         user = crud.get_user_by_username(current_user.username)
 
-        return render_template('calendar.html', user=user)
+        return render_template('calendar.html', user=user, current_user=current_user)
 
     else:
         return redirect('/')

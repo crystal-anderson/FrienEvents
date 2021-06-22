@@ -48,4 +48,3 @@ class UserSearchForm(Form):
     username = StringField('',
             validators=[DataRequired(), Length(1, 64)])
     submit = SubmitField('User Search')
-    

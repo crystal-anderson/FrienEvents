@@ -16,6 +16,12 @@
 <p>Wanderlust come true!</p>
 <p>Showing {{user.username}} Calendar!</p>
 
+
+{% if user == current_user %}
+<div id="current_user"></div>
+{% endif %}
+
+
 <div id="calendar" data-user-id="{{user.user_id}}"></div>
 
 <div class="modal fade" id="eventModal" tabindex="-1">
