@@ -27,14 +27,14 @@ with open('data/events.json') as f:
 
 events_in_db = []
 for event in event_data:
-    site_title, event_date, event_url = (
-        event["site_title"],
+    event_title, event_date, event_url = (
+        event["event_title"],
         event["event_date"],
         event["event_url"]
     )
     event_date = datetime.strptime(event["event_date"], "%Y-%m-%d")
 
-    db_event = crud.create_event(site_title, event_date, event_url)
+    db_event = crud.create_event(event_title, event_date, event_url)
     events_in_db.append(db_event)
 
 #tying random input for testing

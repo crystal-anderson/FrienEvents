@@ -1,11 +1,11 @@
 [
     {
-        "site_title": "Austin City Limits Music Festival Weekend 1",
+        "event_title": "Austin City Limits Music Festival Weekend 1",
         "event_date": "2021-10-02",
         "event_url": "https://www.aclfestival.com/"
     },
     {
-        "site_title": "Austin City Limits Music Festival Weekend 2",
+        "event_title": "Austin City Limits Music Festival Weekend 2",
         "event_date": "2021-10-08",
         "event_url": "https://www.aclfestival.com/"
     }

@@ -20,10 +20,11 @@ const calendar = new FullCalendar.Calendar(domCal, {
         custom1: {
           text: 'add event',
           click: function() {
-              alert('clicked custom button!')
+            location.pathname = '/custom-add-event'
           }
         }
       },
+
     eventClick: (info) => {
         info.jsEvent.preventDefault();
 

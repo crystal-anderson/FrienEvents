@@ -13,10 +13,11 @@
 
   <br>
 
-  {% set event_json = {'site_title': event.name, 'event_date': event.dates.start.dateTime, 'event_url': event.url} %}
+  {% set event_json = {'event_title': event.name, 'event_date': event.dates.start.dateTime, 'event_url': event.url} %}
   <input type="checkbox" name="events-to-add" value='{{ event_json | tojson }}'>
   <li><a href="{{ event.url }}">{{ event.name }}</a></li>
   <li>{{ event.dates.start.localDate }} at {{ event.dates.start.localTime }}</li>
+  <li>SHOWING {{event.dates.start.dateTime}} </li>
   </br>
   {% endfor %}
   <button type="submit">Add to Calendar</button>

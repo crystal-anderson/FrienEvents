@@ -53,12 +53,12 @@ def get_password_by_username(username):
     return username.password
 
 
-def create_event(site_title, event_date, event_url):
+def create_event(event_title, event_date, event_url):
     """Create and return a new event."""
 
 
     event = Event(
-        site_title=site_title,
+        event_title=event_title,
         event_date=event_date,
         event_url=event_url,
     )

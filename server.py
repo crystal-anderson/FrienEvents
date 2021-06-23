@@ -127,7 +127,7 @@ def add_event():
 
         for evt in events_to_add:
             data = json.loads(evt)
-            event = crud.create_event(data["site_title"], data["event_date"], data["event_url"])
+            event = crud.create_event(data["event_title"], data["event_date"], data["event_url"])
             current_user.events.append(event)
             db.session.commit()
 
@@ -183,7 +183,7 @@ def get_users_events(user_id):
     for event in user.events:
         events_list.append({
             "event_id": event.event_id,
-            "title" : event.site_title,
+            "title" : event.event_title,
             "start" : event.event_date.isoformat(),
             "url" : event.event_url,
             # "description": event.user_events[0].user_desc
@@ -208,6 +208,44 @@ def user_search():
             return render_template('calendar.html', user=user)
 
     return render_template('user-search.html', form=form)
+
+
+@app.route('/custom-add-event')
+def custom_add_event():
+    """View add event page with form to manually add an event."""
+
+    if current_user.is_authenticated:
+        user = crud.get_user_by_username(current_user.username)
+
+        return render_template('add-event.html', user=user)
+
+    else:
+        return redirect('/')
+
+@app.route('/custom-add', methods=['GET', 'POST'])
+def custom_add():
+    """Manually added event function."""
+
+    if current_user.is_authenticated:
+        event = request.form.get('event-to-add')
+
+
+        print("\n\n\n\n\n\n\n\n")
+        print(f"Event form: {event}")
+        print(f"event title: {event_title}")
+        print(f"Event date: {event_date}")
+        print(f"Event Url: {event_url}")
+
+        event_date = event_date.isoformat()
+
+        event = crud.create_event(event_title, event_date, event_url)
+        current_user.events.append(event)
+        db.session.commit()
+
+        return redirect ('/calendar')
+
+    else:
+        return redirect('/')
 
 
 if __name__ == '__main__':

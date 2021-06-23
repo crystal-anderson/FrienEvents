@@ -9,19 +9,29 @@
   <p>Hi {{user.username}}!</p>
 
 
-  <form method="POST" action="/add-event">
-    {% for event in events %}
+<div class ="container">
   
-    <br>
-  
-    {% set event_json = {'site_title': event.name, 'event_date': event.dates.start.dateTime, 'event_url': event.url} %}
-    <input type="checkbox" name="events-to-add" value='{{ event_json | tojson }}'>
-    <li><a href="{{ event.url }}">{{ event.name }}</a></li>
-    <li>{{ event.dates.start.localDate }} at {{ event.dates.start.localTime }}</li>
-    </br>
-    {% endfor %}
-    <button type="submit">Add to Calendar</button>
+  <form method="POST" name="event-to-add" action="/custom-add">
+
+  <h4>Event Title</h4>
+  <div class="form-group">
+    <input type="text" id="event_title">
+  </div>
+
+  <h4>Event URL</h4>
+  <div class="form-group">
+    <input type="text" id="event_url">
+  </div>
+
+  <h4>Start Date and Time</h4>
+  <div class="form-group">
+    <input type="datetime-local" step="1" id="event_date">
+  </div>
+
+  <button type="submit">Add That Event!</button>
+
   </form>
+</div>
 
 
 {% endblock %}

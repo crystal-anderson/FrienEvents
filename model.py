@@ -82,7 +82,7 @@ class Event(db.Model):
     event_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    site_title = db.Column(db.String(100))
+    event_title = db.Column(db.String(100))
     event_date = db.Column(db.DateTime)
     event_url = db.Column(db.String(200))
 
