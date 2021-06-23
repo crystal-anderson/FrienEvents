@@ -1,8 +1,8 @@
-from wtforms import Form, BooleanField, StringField, PasswordField, TextField, ValidationError, SubmitField, validators
+from wtforms import Form, BooleanField, StringField, PasswordField, TextField, ValidationError, SubmitField, SelectField, RadioField, validators
 
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms.validators import DataRequired, EqualTo, Length
 
-from wtforms.fields.html5 import URLField, DateTimeLocalField
+from wtforms.fields.html5 import EmailField, URLField, DateTimeLocalField
 
 from model import User
 
@@ -10,21 +10,20 @@ from model import User
 class RegistrationForm(Form):
     """Registration form referenced on register template and register server route."""
 
-    username = StringField('Username', [validators.Length(min=4, max=25)])
-    email = StringField('Email Address', [validators.Length(min=6, max=35)])
+    username = StringField('Username', validators=[DataRequired(), Length(1, 64)])
+    email = EmailField('Email Address', validators=[DataRequired(), Length(1, 64)])
     password = PasswordField('New Password', [
         validators.DataRequired(),
         validators.EqualTo('confirm', message='Passwords must match')
     ])
     confirm = PasswordField('Repeat Password')
-    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
+    accept_tos = BooleanField('I will go on an adventure', [validators.DataRequired()])
 
 
 class LoginForm(Form):
     """Login form referenced on login template and login server route."""
 
-    username = TextField('Username',
-            validators=[DataRequired(), Length(1, 64)])
+    username = TextField('Username', validators=[DataRequired(), Length(1, 64)])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
 

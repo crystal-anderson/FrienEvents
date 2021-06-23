@@ -60,8 +60,17 @@ def register():
 
     form = RegistrationForm(request.form)
 
+    if crud.get_user_by_email(form.email.data):
+        flash(f'Account already created with the email {form.email.data}')
+        return redirect('/login')
+
+    if crud.get_user_by_username(form.username.data):
+        flash(f'Account already created with the username {form.username.data}')
+        return redirect('/login')
+
     if request.method == 'POST' and form.validate():
         crud.create_user(form.email.data, form.password.data, form.username.data)
+
         flash('Thanks for registering')
 
         return redirect('/login')
