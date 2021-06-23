@@ -2,7 +2,7 @@
 
 from flask import Flask, redirect, render_template, request, flash, session, jsonify
 from model import connect_to_db, db, User, Event
-from form import RegistrationForm, LoginForm, UserSearchForm
+from form import RegistrationForm, LoginForm, UserSearchForm, CustomAddEventForm
 import crud
 import os
 import requests
@@ -145,10 +145,8 @@ def remove_event(event_id):
     event = Event.query.get(event_id)
 
     for user_event in event.user_events:
-        print(f"CHECKING event {user_event}")
 
         if user_event.user_id == current_user.user_id:
-            print(f"DELETING user event {user_event}")
             db.session.delete(user_event)
             db.session.commit()
 
@@ -210,42 +208,27 @@ def user_search():
     return render_template('user-search.html', form=form)
 
 
-@app.route('/custom-add-event')
+@app.route('/custom-add-event', methods=['GET', 'POST'])
 def custom_add_event():
     """View add event page with form to manually add an event."""
+
+    form = CustomAddEventForm(request.form)
 
     if current_user.is_authenticated:
         user = crud.get_user_by_username(current_user.username)
 
-        return render_template('add-event.html', user=user)
+        if request.method == 'POST':
 
-    else:
-        return redirect('/')
+            event = crud.create_event(form.event_title.data, 
+                                        form.event_date.data, 
+                                        form.event_url.data)
+            user.events.append(event)
+            db.session.commit()
+            flash('Your event has been added!')
 
-@app.route('/custom-add', methods=['GET', 'POST'])
-def custom_add():
-    """Manually added event function."""
+            return redirect('/calendar')
 
-    if current_user.is_authenticated:
-        event = request.form.get('event-to-add')
-
-
-        print("\n\n\n\n\n\n\n\n")
-        print(f"Event form: {event}")
-        print(f"event title: {event_title}")
-        print(f"Event date: {event_date}")
-        print(f"Event Url: {event_url}")
-
-        event_date = event_date.isoformat()
-
-        event = crud.create_event(event_title, event_date, event_url)
-        current_user.events.append(event)
-        db.session.commit()
-
-        return redirect ('/calendar')
-
-    else:
-        return redirect('/')
+    return render_template('add-event.html', user=user, form=form)
 
 
 if __name__ == '__main__':

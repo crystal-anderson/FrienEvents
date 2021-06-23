@@ -6,32 +6,18 @@
 
   <h2>Event Details</h2>
   <p>Wanderlust come true!</p>
-  <p>Hi {{user.username}}!</p>
 
 
-<div class ="container">
-  
-  <form method="POST" name="event-to-add" action="/custom-add">
+  {% from "_formhelpers.html" import render_field %}
+  <form method=post>
+    <dl>
+      {{ render_field(form.event_title) }}
+      {{ render_field(form.event_url) }}
+      {{ render_field(form.event_date) }}
 
-  <h4>Event Title</h4>
-  <div class="form-group">
-    <input type="text" id="event_title">
-  </div>
-
-  <h4>Event URL</h4>
-  <div class="form-group">
-    <input type="text" id="event_url">
-  </div>
-
-  <h4>Start Date and Time</h4>
-  <div class="form-group">
-    <input type="datetime-local" step="1" id="event_date">
-  </div>
-
-  <button type="submit">Add That Event!</button>
-
+    </dl>
+    <p><input type=submit>
   </form>
-</div>
 
 
 {% endblock %}

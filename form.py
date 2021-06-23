@@ -2,6 +2,8 @@ from wtforms import Form, BooleanField, StringField, PasswordField, TextField, V
 
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
+from wtforms.fields.html5 import URLField, DateTimeLocalField
+
 from model import User
 
 
@@ -49,3 +51,13 @@ class UserSearchForm(Form):
             validators=[DataRequired(), Length(1, 64)])
     submit = SubmitField('User Search')
 
+
+class CustomAddEventForm(Form):
+    """Add event form referenced on add-event template and custom-add-event server route."""
+
+    event_title = StringField('Event Title',
+            validators=[DataRequired(), Length(1, 200)])
+    event_url = URLField('Event URL',
+            validators=[DataRequired(), Length(1, 500)])
+    event_date = DateTimeLocalField('Event Date', format='%Y-%m-%dT%H:%M',
+            validators=[DataRequired()])

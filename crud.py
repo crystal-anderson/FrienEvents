@@ -67,6 +67,7 @@ def create_event(event_title, event_date, event_url):
     db.session.commit()
     return event
 
+
 def get_events():
     """Return all events."""
 
