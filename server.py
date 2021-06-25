@@ -99,7 +99,7 @@ def search_events():
     startdate = request.args.get('startdate', '')
     enddate = request.args.get('enddate', '')
     statecode = request.args.get('stateCode', '')
-    sort = request.args.get('sort', 'date,desc')
+    sort = request.args.get('sort', 'relevance,asc')
 
     start_end_datetime = []
     if startdate:
@@ -107,13 +107,17 @@ def search_events():
     if enddate:
         start_end_datetime.append(enddate)
 
+    print('\n\n\n\n\n')
+    print(startdate)
+    
     url = 'https://app.ticketmaster.com/discovery/v2/events'
     payload = {'apikey': API_KEY,
                'keyword': keyword,
                'localStartEndDateTime': ', '.join(start_end_datetime),
                'city': city,
                'stateCode': statecode,
-               'sort': sort}
+               'sort': sort,
+               'size': '100'}
 
     response = requests.get(url, params=payload)
 
