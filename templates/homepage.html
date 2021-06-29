@@ -1,22 +1,25 @@
 {% extends 'base.html' %}
 
-{% block title %}FrienEvents Homepage{% endblock %}
+{% block extra_head %}  <link rel="stylesheet" href="/static/css/styles.css">  {% endblock %}
 
 {% block content %}
 
-  <h2>Homepage</h2>
-  <p>Wanderlust come true!</p>
-  <h3>Search By!</h3>
+
+<div class="container-fluid">
+
+  <h1>Homepage </h1>
+  <h2>Wanderlust come true!</h2> 
+
+ <br>
 
   {% if current_user.is_authenticated %}   
-        Welcome, {{ current_user.username }} 
+    Welcome, {{ current_user.username }}
+  <br>
   {% endif %}
 
 
-
-
-  <div class="container">
-  
+<div class="row">
+  <div class="col-12 border rounded">
     <form method="GET" action="/search">
 
     <h4>Keyword</h4>
@@ -105,7 +108,8 @@
     <input type="submit" value="Look for events!">
 
     </form>
-  </div>
-
+    </div>
+  </div> 
+</div>
 
 {% endblock %}

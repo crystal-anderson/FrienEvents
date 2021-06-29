@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Search Results{% endblock %}
+{% block extra_head %}  <link rel="stylesheet" href="/static/css/styles.css">  {% endblock %}
 
 {% block content %}
 
@@ -14,13 +14,23 @@
   <br>
 
   {% set event_json = {'event_title': event.name, 'event_date': event.dates.start.dateTime, 'event_url': event.url} %}
-  <input type="checkbox" name="events-to-add" value='{{ event_json | tojson }}'>
-  <li><a href="{{ event.url }}">{{ event.name }}</a></li>
-  <li>{{ event.dates.start.localDate }} at {{ event.dates.start.localTime }}</li>
-  <li>SHOWING {{event.dates.start.dateTime}} </li>
-  </br>
+
+<div container>
+  <center>
+  <br> <a href="{{ event.url }}">{{ event.name }}</a>
+  
+  <br> {{ event.dates.start.localDate }} at {{ event.dates.start.localTime }}
+  
+  <br> SHOWING {{event.dates.start.dateTime}}
+  
+  <br> <input type="checkbox" name="events-to-add" value='{{ event_json | tojson }}'>
+  </center>
+</div>
+
   {% endfor %}
+
   <button type="submit">Add to Calendar</button>
+
 </form>
 
 

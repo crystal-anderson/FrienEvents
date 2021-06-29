@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% block title %}FrienEvents{% endblock %}
-
 {% block extra_head %}
 <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
 
@@ -9,9 +7,16 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.js'></script>
 
 <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet' />
+
+<link rel="stylesheet" href="/static/css/calendar-styles.css">
+
 {% endblock %}
 
 {% block content %}
+
+
+<link rel="stylesheet" href="/static/css/calendar-styles.css">
+
 <h2>Calendar Page</h2>
 <p>Wanderlust come true!</p>
 <p>Showing {{user.username}} Calendar!</p>

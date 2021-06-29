@@ -79,14 +79,14 @@ def register():
 
 
 @app.route('/logout', methods=['GET', 'POST'])
-@login_required
 def logout():
     """Logout the current user."""
+    if current_user.is_authenticated:
+        logout_user()
+        flash('You have successfully logged out.')
 
-    logout_user()
-
-    flash('You have successfully logged out.')
-
+    else: 
+        flash('If you log in, you can log out (;')
     return redirect('/')
 
 
@@ -171,7 +171,6 @@ def remove_event(event_id):
 
 
 @app.route('/calendar')
-@login_required
 def calendar():
     """View calendar page."""
 
@@ -181,6 +180,7 @@ def calendar():
         return render_template('calendar.html', user=user, current_user=current_user)
 
     else:
+        flash('Log in to view your calendar!')
         return redirect('/')
 
 
