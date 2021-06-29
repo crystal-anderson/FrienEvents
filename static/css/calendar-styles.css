@@ -3,8 +3,84 @@ body {
     font-family: Courier, monospace;
     background: url("/static/images/eveningjosh.jpg");
     background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
   }
+
+
+
+
+
+  
+/* for button transparency and coloring */
+.semi-transparent-button {
+    box-sizing: border-box;
+    top: 0px;
+    position: sticky;
+    margin: 0 auto;
+    padding: 8px;
+    width: 80%;
+    max-width: 150px;
+    background: #fff; /* fallback color for old browsers */background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    color: #e1dad2;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-out;
+  }
+
+/* unvisited link */
+a:link {
+    color: #1b2461;
+  }
+  
+/* visited link */
+a:visited {
+    color: #1b2461;
+  }
+  
+/* mouse over link */
+a:hover {
+    color:#1b2461;
+  }
+  
+/* selected link */
+a:active {
+    color: #1b2461;
+  }
+
+/* font color */
+p {
+    color:#fff
+  }
+
+/* fc fc-media-screen fc-direction-ltr fc-theme-bootstrap
+<div id="calendar" data-user-id="3" class="fc fc-media screen" fc-direction-ltr fc-theme-boostrap"> */
+/* fc fc-media-screen fc-direction-ltr fc-theme-bootstrap */
+
+table.fc-scrollgrid.table-bordered.fc-scrollgrid-liquid {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid;
+  border-color: #eae5e6;
+  border-radius: 8px;
+}
+
+h6 {
+  margin: 0 auto;
+  padding: 8px;
+  width: 90%;
+  max-width: 500px;
+  background: #000103; 
+  border-radius: 8px;
+  color: #b4a2a4;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+
+
+/* ---- CALENDAR BUTTONS ---- */
 
 /* Today button active mode */
 button.fc-today-button.btn.btn-primary.active {
@@ -148,71 +224,4 @@ button.fc-nextYear-button.btn.btn-primary.active {
   border: 1px solid;
   border-color: #eae5e6;
   border-radius: 8px;
-}
-
-
-/* for button transparency and coloring */
-.semi-transparent-button {
-    box-sizing: border-box;
-    top: 0px;
-    position: sticky;
-    margin: 0 auto;
-    padding: 8px;
-    width: 80%;
-    max-width: 150px;
-    background: #fff; /* fallback color for old browsers */background: rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
-    color: #e1dad2;
-    text-align: center;
-    text-decoration: none;
-    letter-spacing: 1px;
-    transition: all 0.3s ease-out;
-  }
-
-/* unvisited link */
-a:link {
-    color: #1b2461;
-  }
-  
-/* visited link */
-a:visited {
-    color: #1b2461;
-  }
-  
-/* mouse over link */
-a:hover {
-    color:#1b2461;
-  }
-  
-/* selected link */
-a:active {
-    color: #1b2461;
-  }
-
-/* font color */
-p {
-    color:#fff
-  }
-
-/* fc fc-media-screen fc-direction-ltr fc-theme-bootstrap
-<div id="calendar" data-user-id="3" class="fc fc-media screen" fc-direction-ltr fc-theme-boostrap"> */
-/* fc fc-media-screen fc-direction-ltr fc-theme-bootstrap */
-
-table.fc-scrollgrid.table-bordered.fc-scrollgrid-liquid {
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid;
-  border-color: #eae5e6;
-  border-radius: 8px;
-}
-
-h6 {
-  margin: 0 auto;
-  padding: 5px;
-  width: 90%;
-  max-width: 500px;
-  background: #000103; 
-  border-radius: 5px;
-  color: #b4a2a4;
-  text-align: center;
-  letter-spacing: 1px;
 }

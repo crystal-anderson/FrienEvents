@@ -1,20 +1,59 @@
 body {
     font-size: 18px;
     font-family: Courier, monospace;
-    background: url("/static/images/JoshieTree.jpg");
+    background: url("/static/images/sandyjosh.jpg");
+    background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
   }
 
 
 div.container {
-    /* background-color:#e1dad2; */
+    /* background-color:#194a50; */
     background-color: rgba(255,255,255,0.5);
     border: 4px solid;
     border-color: #d8a28c;
     border-radius: 8px;
   }
 
+
+form.search {
+    /* background-color:#194a50; */
+    background-color: rgba(255,255,255,0.5);
+    border: 4px solid;
+    border-color: #d8a28c;
+    border-radius: 8px;
+  }
+
+  
+h6 {
+    margin: 0 auto;
+    padding: 8px;
+    width: 90%;
+    max-width: 500px;
+    background: #000103; 
+    border-radius: 8px;
+    color: #b4a2a4;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+.headtitle {
+  box-sizing: border-box;
+  top: 0px;
+  position: sticky;
+  margin: 0 auto;
+  padding: 8px;
+  width: 80%;
+  max-width: 150px;
+  background: #000103;
+  border-radius: 8px;
+  color: #b4a2a4;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-out;
+}
 
 /* for button transparency and coloring */
 .semi-transparent-button {
@@ -32,7 +71,7 @@ div.container {
     text-decoration: none;
     letter-spacing: 1px;
     transition: all 0.3s ease-out;
-  }
+}
 
 /* unvisited link */
 a:link {

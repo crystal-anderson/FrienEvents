@@ -5,22 +5,46 @@
 {% block content %}
 
 
-<div class="container-fluid">
 
-  <h1>Homepage </h1>
-  <h2>Wanderlust come true!</h2> 
+
+<div class="container">
+
+<div class="row">
+  <center>
+  <div class="col-md-5">
+
+  <p>
+    <h1>Homepage </h1>
+  </p>
+
+  <p>
+    <h2>Wanderlust come true!</h2> 
+  </p>
+  </div>
+  </center>
+</div>
+
+
 
  <br>
 
+
+ <div class="row">
+  <div class="col-md-3">
+   
   {% if current_user.is_authenticated %}   
-    Welcome, {{ current_user.username }}
-  <br>
+    <p>
+      Welcome, {{ current_user.username }}
+    </p>
   {% endif %}
 
+  </div>
+</div>
 
-<div class="row">
-  <div class="col-12 border rounded">
-    <form method="GET" action="/search">
+
+  <div class="row">
+    <div class="col-md-4">
+    <form method="GET" class="search" action="/search">
 
     <h4>Keyword</h4>
     <div class="form-group">
@@ -108,8 +132,10 @@
     <input type="submit" value="Look for events!">
 
     </form>
-    </div>
-  </div> 
+    <br>
+  </div>
+
 </div>
 
+</div>
 {% endblock %}

@@ -49,20 +49,21 @@
 
   
 <!-- Header buttons -->
-  <div class="sticky-top">
-    <a class="semi-transparent-button" href="/">Home</a>
-    <a class="semi-transparent-button" href="/calendar">Calendar</a>
-    <a class="semi-transparent-button" href="/register">Register</a>
-    <a class="semi-transparent-button" href="/login">Login</a>
-    <a class="semi-transparent-button" href="/logout">Logout</a>
-    <a class="semi-transparent-button" href="/user-search">User Search</a>
-  </div>
+<div class="sticky-top">
+  <text class="headtitle">FrienEvents</text>
+  <a class="semi-transparent-button" href="/">Home</a>
+  <a class="semi-transparent-button" href="/calendar">Calendar</a>
+  <a class="semi-transparent-button" href="/register">Register</a>
+  <a class="semi-transparent-button" href="/login">Login</a>
+  <a class="semi-transparent-button" href="/logout">Logout</a>
+  <a class="semi-transparent-button" href="/user-search">User Search</a>
+</div>
 
-
-  <h1>FrienEvents</h1>
+<br><br>
 
 
   {% block content %}
+
 
     <!-- BODY CONTENT GOES HERE -->
 
@@ -74,7 +75,11 @@
 
 </body>
 
+{% block footer %}
 <footer>
+  <br><br>
   <h6>Collaborating events with friends since 2021.</h6>
 </footer>
+{% endblock %}
+
 </html>
