@@ -5,18 +5,19 @@
 {% block content %}
 
 
-  <h2>Login Page</h2>
+<h1 class="neonText">Login Page</h1>
   <p>Wanderlust come true!</p>
   
 
-  <h1>LOGIN</h1>
 
+  <div class="container">
   {% from "_formhelpers.html" import render_field %}
   <form id="loginForm" class="form form-register" method="POST" action="" role="form">
       {{ render_field(form.username, placeholder="username") }}<br>
       {{ render_field(form.password, placeholder="password") }}<br>
       <p><input type=submit value="Login">
   </form>
+  </div>
 
 
 {% endblock %}

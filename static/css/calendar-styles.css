@@ -1,34 +1,73 @@
 body {
-    font-size: 18px;
-    font-family: Courier, monospace;
-    background: url("/static/images/eveningjosh.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-  }
-
-
-
-
-
+  font-size: 18px;
+  font-family: Courier, monospace;
+  background: url("/static/images/eveningjosh.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
   
 /* for button transparency and coloring */
 .semi-transparent-button {
-    box-sizing: border-box;
-    top: 0px;
-    position: sticky;
-    margin: 0 auto;
-    padding: 8px;
-    width: 80%;
-    max-width: 150px;
-    background: #fff; /* fallback color for old browsers */background: rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
-    color: #e1dad2;
-    text-align: center;
-    text-decoration: none;
-    letter-spacing: 1px;
-    transition: all 0.3s ease-out;
+  box-sizing: border-box;
+  top: 0px;
+  position: sticky;
+  margin: 0 auto;
+  padding: 8px;
+  width: 80%;
+  max-width: 150px;
+  background: #fff; /* fallback color for old browsers */background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  color: #e1dad2;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-out;
+}
+
+/* H1 styling for neon */
+.neonText {
+  color: #fff;
+  text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff,
+    0 0 21px #fff,
+    0 0 42px #bc13fe,
+    0 0 82px #bc13fe,
+    0 0 92px #bc13fe,
+    0 0 102px #bc13fe,
+    0 0 151px #bc13fe;
+}
+
+@keyframes flicker {
+    
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+
+      text-shadow:
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px #bc13fe,
+      0 0 80px #bc13fe,
+      0 0 90px #bc13fe,
+      0 0 100px #bc13fe,
+      0 0 150px #bc13fe;
+  
   }
+  
+  20%, 24%, 55% {        
+      text-shadow: none;
+  }    
+}
+  
+  /* Additional styling for neonText*/
+h1 {
+  text-align: center;
+  font-size: 4.2rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  animation: flicker 1.5s infinite alternate;
+}
 
 /* unvisited link */
 a:link {
@@ -52,20 +91,10 @@ a:active {
 
 /* font color */
 p {
-    color:#fff
+    color:#fff;
   }
 
-/* fc fc-media-screen fc-direction-ltr fc-theme-bootstrap
-<div id="calendar" data-user-id="3" class="fc fc-media screen" fc-direction-ltr fc-theme-boostrap"> */
-/* fc fc-media-screen fc-direction-ltr fc-theme-bootstrap */
-
-table.fc-scrollgrid.table-bordered.fc-scrollgrid-liquid {
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid;
-  border-color: #eae5e6;
-  border-radius: 8px;
-}
-
+/* frienevents logo at top */
 h6 {
   margin: 0 auto;
   padding: 8px;
@@ -78,7 +107,29 @@ h6 {
   letter-spacing: 1px;
 }
 
+/* footer position */
+.footer {
+  position: bottom;
+  bottom: 0;
+  width: 100%;
+  }
 
+
+/* calendar title (the month, day, or week range) */
+h2.fc-toolbar-title {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid;
+  border-color: #eae5e6;
+  border-radius: 8px;
+}
+
+/* calendar color (transparent) */
+table.fc-scrollgrid.table-bordered.fc-scrollgrid-liquid {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid;
+  border-color: #eae5e6;
+  border-radius: 8px;
+}
 
 /* ---- CALENDAR BUTTONS ---- */
 

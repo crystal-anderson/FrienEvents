@@ -4,10 +4,10 @@
 
 {% block content %}
 
-  <h2>Event Details</h2>
+<h1 class="neonText">Event Details</h1>
   <p>Wanderlust come true!</p>
 
-
+  <div class="container">
   {% from "_formhelpers.html" import render_field %}
   <form method=post>
     <dl>
@@ -18,6 +18,7 @@
     </dl>
     <p><input type=submit>
   </form>
+  </div>
 
 
 {% endblock %}

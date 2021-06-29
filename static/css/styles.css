@@ -25,7 +25,7 @@ form.search {
     border-radius: 8px;
   }
 
-  
+/* header and footer */
 h6 {
     margin: 0 auto;
     padding: 8px;
@@ -38,6 +38,96 @@ h6 {
     letter-spacing: 1px;
   }
 
+/* form headings */
+  h4 {
+    font-size: .9rem;
+    padding: 8px;
+    width: 35%;
+    max-width: 200px;
+    background: #000103; 
+    border-radius: 8px;
+    color: #b4a2a4;
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+  }
+
+
+/* H1 styling for neon */
+.neonText {
+  color: #fff;
+  text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff,
+    0 0 21px #fff,
+    0 0 42px #0fa,
+    0 0 82px #0fa,
+    0 0 92px #0fa,
+    0 0 102px #0fa,
+    0 0 151px #0fa;
+}
+
+@keyframes pulsate {
+    
+    100% {
+
+        text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 19px #fff,
+        0 0 40px #0fa,
+        0 0 80px #0fa,
+        0 0 90px #0fa,
+        0 0 100px #0fa,
+        0 0 120px #0fa;
+    
+    }
+    
+    0% {
+
+      text-shadow:
+      0 0 2px #fff,
+      0 0 4px #fff,
+      0 0 6px #fff,
+      0 0 10px #0fa,
+      0 0 35px #0fa,
+      0 0 65px #0fa,
+      0 0 80px #0fa,
+      0 0 90px #0fa;
+
+  }
+}
+  
+/* Additional styling for neonText*/
+h1 {
+  text-align: center;
+  font-size: 4.2rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  animation: pulsate 2.1s infinite;
+}
+
+/* flash message */
+ul.flashes {
+  margin: 0 auto;
+  padding: 8px;
+  width: 90%;
+  max-width: 500px;
+  background: #000103; 
+  border-radius: 8px;
+  color: #b4a2a4;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.footer {
+  position: bottom;
+  bottom: 0;
+  width: 100%;
+  }
+
+/* the title box with the links */
 .headtitle {
   box-sizing: border-box;
   top: 0px;
