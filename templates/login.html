@@ -11,14 +11,22 @@
   
 
 
-  <div class="container">
+<div class="container">
+ <div class="row">
+  <div class="col-md-4">
+    <center>
+    <br><br>
   {% from "_formhelpers.html" import render_field %}
-  <form id="loginForm" class="form form-register" method="POST" action="" role="form">
-      {{ render_field(form.username) }}<br>
-      {{ render_field(form.password) }}<br>
-      <p><input type=submit value="Login">
+  <form id="loginForm" class="form-login" method="POST" action="" role="form">
+    <dl>
+      {{ render_field(form.username) }}
+      {{ render_field(form.password) }}
+    </dl>
+  <p><input type=submit value="Login">
   </form>
+  <br><br>
+  </center>
   </div>
-
-
+ </div>
+</div>
 {% endblock %}

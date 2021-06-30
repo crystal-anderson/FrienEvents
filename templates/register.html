@@ -10,16 +10,26 @@
 </center>
 
 <div class="container">
-{% from "_formhelpers.html" import render_field %}
-<form method=post>
-  <dl>
+ <div class="row">
+  <div class="col-md-4">
+   <center>
+   <br><br>
+
+    {% from "_formhelpers.html" import render_field %}
+    <form method=post class="form-register">
+    <dl>
     {{ render_field(form.username) }}
     {{ render_field(form.email) }}
     {{ render_field(form.password) }}
     {{ render_field(form.confirm) }}
     {{ render_field(form.accept_tos) }}
-  </dl>
-  <p><input type=submit value="Let's go!">
-</form>
+    </dl>
+    <p><input type=submit value="Let's go!">
+    </form>
+
+  <br><br>
+  </center>
+  </div>
+ </div>
 </div>
 {% endblock %}
