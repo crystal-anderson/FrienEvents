@@ -16,29 +16,24 @@
   <p>
     <h1 class="neonText"> Homepage </h1>
   </p>
-
-  <p>
-    <h2>Wanderlust come true!</h2> 
-  </p>
   </div>
   </center>
 </div>
 
 
-
- <br>
+<br>
 
 
  <div class="row">
-  <div class="col-md-3">
-   
+  <div class="col-md-4">
   {% if current_user.is_authenticated %}   
-    <p>
-      Welcome, {{ current_user.username }}
-    </p>
+    <p><center>
+    <text class="white-background">hi, {{ current_user.username }}. you look good today.</text> 
+    </p></center>
   {% endif %}
 
   </div>
+  
 </div>
 
   <div class="row">
@@ -129,12 +124,21 @@
       <input type="radio" name="sort" value="relevance,asc"> Relevance
     </div>
 
-    <input type="submit" value="Look for events!">
+    <input type="submit" value="look for events!">
 
     </form>
     </center>
     <br>
   </div>
+
+
+
+  <div class="col-md-8">
+<br><br><br><br><br><br><br><p>
+<center><text class="coral-background">Wanderlust come true!</text></center>
+</p>
+    </div>
+
 
 </div>
 

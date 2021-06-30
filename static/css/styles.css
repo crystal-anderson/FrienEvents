@@ -21,6 +21,7 @@ form.search,
 form.form-register, 
 form.form-login, 
 form.form-user-search,
+form.form-add-event,
 div.search-results {
   /* background-color:#194a50; */
   background-color: rgba(255,255,255,0.5);
@@ -152,6 +153,63 @@ ul.flashes {
   background: #000103;
   border-radius: 8px;
   color: #b4a2a4;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-out;
+}
+
+/* headline text */
+.white-background {
+  box-sizing: border-box;
+  top: 0px;
+  margin: 0 auto;
+  padding: 8px;
+  width: 80%;
+  max-width: 150px;
+  background: #fff;
+  border-radius: 8px;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-out;
+}
+
+/* explanation text, currently unused */
+.white-background-small {
+  box-sizing: border-box;
+  top: 0px;
+  margin: 0 auto;
+  padding: 1px;
+  width: 30%;
+  max-width: 30px;
+  background: #fff;
+  border: 1px solid;
+  border-color: #000;
+  border-radius: 3px;
+  color: #000;
+  font-size: .75em;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-out;
+}
+
+/* wanderlust homepage phrase box */
+.coral-background {
+  background-color: rgba(255,255,255,0.5);
+  border: 3px solid;
+  border-color: #d8a28c;
+  border-radius: 8px;
+  box-sizing: border-box;
+  top: 0px;
+  margin: 0 auto;
+  padding: 8px;
+  width: 80%;
+  max-width: 150px;
+  font-size: 1.4em;
+  color: #000;
   text-align: center;
   text-decoration: none;
   letter-spacing: 1px;

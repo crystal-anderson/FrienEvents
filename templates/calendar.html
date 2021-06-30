@@ -8,14 +8,12 @@
 
 <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet' />
 
-<link rel="stylesheet" href="/static/css/calendar-styles.css">
+<link rel="stylesheet" href="/static/css/styles-calendar.css">
 
 {% endblock %}
 
 {% block content %}
 
-
-<link rel="stylesheet" href="/static/css/calendar-styles.css">
 
 <center>
 <h1 class="neonText">Calendar</h1>
@@ -23,8 +21,10 @@
 <p>Wanderlust come true!</p>
 </center>
 
-<p>Showing {{user.username}} Calendar!</p>
-
+<p>
+ <text class="white-background">this calendar belongs to: {{user.username}}.</text> 
+</p>
+ 
 
 {% if user == current_user %}
 <div id="current_user"></div>

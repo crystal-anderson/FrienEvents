@@ -4,21 +4,31 @@
 
 {% block content %}
 
-<h1 class="neonText">Event Details</h1>
-  <p>Wanderlust come true!</p>
+<center>
+  <h1 class="neonText">Event Details</h1>
+  <br><br>
+  <p>
+    <text class="white-background">describe the event to add, and have fun!</text> 
+  </p>
+</center>
 
   <div class="container">
-  {% from "_formhelpers.html" import render_field %}
-  <form method=post>
-    <dl>
-      {{ render_field(form.event_title) }}
-      {{ render_field(form.event_url) }}
-      {{ render_field(form.event_date) }}
-
-    </dl>
-    <p><input type=submit>
-  </form>
-  </div>
-
-
+    <div class="row">
+      <div class="col-md-4">
+        <center>
+        <br><br>
+        {% from "_formhelpers.html" import render_field %}
+        <form class="form-add-event" method=post>
+          <dl>
+            {{ render_field(form.event_title) }}
+            {{ render_field(form.event_url) }}
+            {{ render_field(form.event_date) }}
+          </dl>
+          <p><input type=submit>
+        </form>
+        <br><br>
+      </center>
+      </div>
+     </div>
+    </div>
 {% endblock %}
