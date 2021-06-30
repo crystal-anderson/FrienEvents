@@ -4,8 +4,12 @@
 
 {% block content %}
 
+<center>
+  <h1 class="neonText">Search Results</h1>
+    <p>Wanderlust come true!</p>
+  </center>
 
-<h2>Search Results</h2>
+<div class="container">
 
 
 <form method="POST" action="/add-event">
@@ -15,23 +19,29 @@
 
   {% set event_json = {'event_title': event.name, 'event_date': event.dates.start.dateTime, 'event_url': event.url} %}
 
-<div container>
+  <div class="row">
   <center>
-  <br> <a href="{{ event.url }}">{{ event.name }}</a>
-  
-  <br> {{ event.dates.start.localDate }} at {{ event.dates.start.localTime }}
-  
-  <br> SHOWING {{event.dates.start.dateTime}}
+  <div class="col-md-8">
+  <div class="search-results">
+  <center>
+  <br> <a class="search-result-title" href="{{ event.url }}">{{ event.name }}</a><br>
+  SHOWING
+  <br> <b>{{ event.dates.start.localDate }}</b> at <b>{{ event.dates.start.localTime }}</b>
   
   <br> <input type="checkbox" name="events-to-add" value='{{ event_json | tojson }}'>
   </center>
-</div>
+  </div>
+  </div>
+  </center>
+  </div>
+
+
 
   {% endfor %}
-
   <button type="submit">Add to Calendar</button>
 
 </form>
 
+</div>
 
 {% endblock %}

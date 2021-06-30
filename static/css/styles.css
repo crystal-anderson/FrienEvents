@@ -20,7 +20,8 @@ div.container {
 form.search, 
 form.form-register, 
 form.form-login, 
-form.form-user-search {
+form.form-user-search,
+div.search-results {
   /* background-color:#194a50; */
   background-color: rgba(255,255,255,0.5);
   border: 4px solid;
@@ -146,6 +147,22 @@ ul.flashes {
   position: sticky;
   margin: 0 auto;
   padding: 8px;
+  width: 80%;
+  max-width: 150px;
+  background: #000103;
+  border-radius: 8px;
+  color: #b4a2a4;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-out;
+}
+
+.search-result-title {
+  box-sizing: border-box;
+  top: 0px;
+  margin: 0 auto;
+  padding: 4px;
   width: 80%;
   max-width: 150px;
   background: #000103;
