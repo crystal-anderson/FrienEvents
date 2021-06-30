@@ -38,8 +38,8 @@ h6 {
     letter-spacing: 1px;
   }
 
-/* form headings */
-  h4 {
+/* search form headings */
+  h4, label {
     font-size: .9rem;
     padding: 8px;
     width: 35%;
@@ -52,6 +52,14 @@ h6 {
     margin-bottom: 5px;
     margin-top: 10px;
   }
+
+input {
+  background-color: white;
+  border-color: black;
+  letter-spacing: .02px;
+  text-align: center;
+  border-style: solid;
+}
 
 
 /* H1 styling for neon */
@@ -102,7 +110,7 @@ h6 {
 /* Additional styling for neonText*/
 h1 {
   text-align: center;
-  font-size: 4.2rem;
+  font-size: 4.9rem;
   text-transform: uppercase;
   font-weight: 400;
   animation: pulsate 2.1s infinite;

@@ -10,22 +10,22 @@ from model import User
 class RegistrationForm(Form):
     """Registration form referenced on register template and register server route."""
 
-    username = StringField('Username', validators=[DataRequired(), Length(1, 64)])
-    email = EmailField('Email Address', validators=[DataRequired(), Length(1, 64)])
-    password = PasswordField('New Password', [
+    username = StringField('username', validators=[DataRequired(), Length(1, 64)])
+    email = EmailField('email address', validators=[DataRequired(), Length(1, 64)])
+    password = PasswordField('new password', [
         validators.DataRequired(),
-        validators.EqualTo('confirm', message='Passwords must match')
+        validators.EqualTo('confirm', message='passwords must match')
     ])
-    confirm = PasswordField('Repeat Password')
-    accept_tos = BooleanField('I will go on an adventure', [validators.DataRequired()])
+    confirm = PasswordField('repeat password')
+    accept_tos = BooleanField('I will go on an adventure ♥', [validators.DataRequired()])
 
 
 class LoginForm(Form):
     """Login form referenced on login template and login server route."""
 
-    username = TextField('Username', validators=[DataRequired(), Length(1, 64)])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Log In')
+    username = TextField('username', validators=[DataRequired(), Length(1, 64)])
+    password = PasswordField('password', validators=[DataRequired()])
+    submit = SubmitField('log in')
 
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
@@ -36,17 +36,17 @@ class LoginForm(Form):
             return False
         user = User.query.filter_by(username=self.username.data).first()
         if not user:
-            self.username.errors.append('Unknown username')
+            self.username.errors.append('unknown username')
             return False
         if not user.verify_password(self.password.data):
-            self.password.errors.append('Invalid password')
+            self.password.errors.append('invalid password')
             return False
         return True
 
 class UserSearchForm(Form):
     """User Search form referenced on user-search template and user-search server route."""
 
-    username = StringField('',
+    username = StringField('username',
             validators=[DataRequired(), Length(1, 64)])
     submit = SubmitField('User Search')
 
@@ -54,9 +54,9 @@ class UserSearchForm(Form):
 class CustomAddEventForm(Form):
     """Add event form referenced on add-event template and custom-add-event server route."""
 
-    event_title = StringField('Event Title',
+    event_title = StringField('event title',
             validators=[DataRequired(), Length(1, 200)])
-    event_url = URLField('Event URL',
+    event_url = URLField('event URL',
             validators=[DataRequired(), Length(1, 500)])
-    event_date = DateTimeLocalField('Event Date', format='%Y-%m-%dT%H:%M',
+    event_date = DateTimeLocalField('event date', format='%Y-%m-%dT%H:%M',
             validators=[DataRequired()])
