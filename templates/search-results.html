@@ -16,6 +16,7 @@
 
 
 <form method="POST" action="/add-event">
+  <div class="row">
   {% for event in events %}
 
   <br>
@@ -28,14 +29,12 @@
 
   {% set event_json = {'event_title': event.name, 'event_date': event_date, 'event_url': event.url} %}
 
-  <div class="row">
-  <center>
-  <div class="col-md-4">
-  <div class="search-results">
-  <center>
-  <br><a href="{{ event.url }}" target="_blank"><img class="event-image" src="{{ event.images[0].url }}"/></a>
+  <div class="col-md-3" id="search-results-border">
+
+  <center><br><a href="{{ event.url }}" target="_blank"><img class="event-image" src="{{ event.images[0].url }}"/></a>
   <br> <a class="search-result-title" href="{{ event.url }}" target="_blank">{{ event.name }}</a><br>
   <text class="white-background-small">SHOWING</text>  <br> 
+
 
   <text class="white-background-small">
     <b>{{ event.dates.start.localDate }}</b>
@@ -44,21 +43,20 @@
   </text>
 
   <br> <input type="checkbox" name="events-to-add" value='{{ event_json | tojson }}'>
+</center>
 
-  </center>
   </div>
-  </div>
-  </center>
-  </div>
+
+
 
 
 
 
   {% endfor %}
-  <button type="submit">Add to Calendar</button>
+  <center><button style="width:240px" type="submit">Add to Calendar</button></center>
 
 </form>
-
+</div>
 </div>
 
 {% endblock %}
