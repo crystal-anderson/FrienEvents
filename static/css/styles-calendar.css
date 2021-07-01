@@ -64,7 +64,7 @@ body {
   /* Additional styling for neonText*/
 h1 {
   text-align: center;
-  font-size: 4.2rem;
+  font-size: 4.9rem;
   text-transform: uppercase;
   font-weight: 400;
   animation: flicker 1.5s infinite alternate;
