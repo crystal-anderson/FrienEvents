@@ -5,20 +5,14 @@
 {% block content %}
 
 
+<center>
+  <h1 class="neonText">Homepage</h1>
+  <br><br>
 
+</center>
+  
 
 <div class="container">
-
-<div class="row">
-  <center>
-  <div class="col-md-5">
-
-  <p>
-    <h1 class="neonText"> Homepage </h1>
-  </p>
-  </div>
-  </center>
-</div>
 
 
 <br>
@@ -28,7 +22,8 @@
   <div class="col-md-4">
   {% if current_user.is_authenticated %}   
     <p><center>
-    <text class="white-background">hi, {{ current_user.username }}. you look good today.</text> 
+    <text class="white-background">hi, {{ current_user.username }}.</text><br>
+    <text class="white-background">you look good today.</text> 
     </p></center>
   {% endif %}
 

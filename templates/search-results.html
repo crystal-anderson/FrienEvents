@@ -20,23 +20,37 @@
 
   <br>
 
-  {% set event_json = {'event_title': event.name, 'event_date': event.dates.start.dateTime, 'event_url': event.url} %}
+  {% if event.dates.start.noSpecificTime %}
+    {% set event_date = event.dates.start.localDate + 'T00:00:00Z' %}
+  {% else %}
+    {% set event_date = event.dates.start.dateTime %}
+  {% endif %}
+
+  {% set event_json = {'event_title': event.name, 'event_date': event_date, 'event_url': event.url} %}
 
   <div class="row">
   <center>
-  <div class="col-md-8">
+  <div class="col-md-4">
   <div class="search-results">
   <center>
-  <br> <a class="search-result-title" href="{{ event.url }}">{{ event.name }}</a><br>
-  SHOWING
-  <br> <b>{{ event.dates.start.localDate }}</b> at <b>{{ event.dates.start.localTime }}</b>
-  
+  <br><a href="{{ event.url }}" target="_blank"><img class="event-image" src="{{ event.images[0].url }}"/></a>
+  <br> <a class="search-result-title" href="{{ event.url }}" target="_blank">{{ event.name }}</a><br>
+  <text class="white-background-small">SHOWING</text>  <br> 
+
+  <text class="white-background-small">
+    <b>{{ event.dates.start.localDate }}</b>
+    {# If it has a specific time, then localTime will exist, so its safe to render #}
+    {% if not event.dates.start.noSpecificTime %} at <b>{{ event.dates.start.localTime }}</b>{% endif %}
+  </text>
+
   <br> <input type="checkbox" name="events-to-add" value='{{ event_json | tojson }}'>
+
   </center>
   </div>
   </div>
   </center>
   </div>
+
 
 
 

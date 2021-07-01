@@ -43,6 +43,10 @@ def login():
 
     form = LoginForm(request.form)
 
+    if current_user.is_authenticated:
+        flash(f"You're already logged in as {current_user.username}.")
+        return redirect('/')
+
     if  request.method == 'POST' and form.validate():
         user = User.query.filter_by(username=form.username.data).first()
 
@@ -86,7 +90,7 @@ def logout():
         flash('You have successfully logged out.')
 
     else: 
-        flash('If you log in, you can log out (;')
+        flash('If you log in, you can log out (:')
     return redirect('/')
 
 
@@ -147,6 +151,7 @@ def add_event():
         return redirect ('/calendar')
 
     else:
+        flash('You need to log in to add an event')
         return redirect('/login')
 
 

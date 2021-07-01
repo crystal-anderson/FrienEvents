@@ -9,7 +9,6 @@ body {
 
 
 div.container {
-  /* background-color:#194a50; */
   background-color: rgba(255,255,255,0.5);
   border: 4px solid;
   border-color: #d8a28c;
@@ -23,7 +22,6 @@ form.form-login,
 form.form-user-search,
 form.form-add-event,
 div.search-results {
-  /* background-color:#194a50; */
   background-color: rgba(255,255,255,0.5);
   border: 4px solid;
   border-color: #d8a28c;
@@ -162,6 +160,7 @@ ul.flashes {
 /* headline text */
 .white-background {
   box-sizing: border-box;
+  font-size: 1.2rem;
   top: 0px;
   margin: 0 auto;
   padding: 8px;
@@ -182,14 +181,14 @@ ul.flashes {
   top: 0px;
   margin: 0 auto;
   padding: 1px;
-  width: 30%;
-  max-width: 30px;
+  width: 50%;
+  max-width: 50px;
   background: #fff;
   border: 1px solid;
   border-color: #000;
   border-radius: 3px;
   color: #000;
-  font-size: .75em;
+  font-size: .9em;
   text-align: center;
   text-decoration: none;
   letter-spacing: 1px;
@@ -230,6 +229,14 @@ ul.flashes {
   text-decoration: none;
   letter-spacing: 1px;
   transition: all 0.3s ease-out;
+}
+
+img.event-image {
+  filter: grayscale(100%);
+  width: 300px;
+  height: auto;
+  border-radius: 8px;
+  opacity: 80%;
 }
 
 /* for button transparency and coloring */
