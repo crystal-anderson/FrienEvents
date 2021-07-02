@@ -1,34 +1,32 @@
-{% extends 'base.html' %}
-
-{% block extra_head %}  <link rel="stylesheet" href="/static/css/styles.css">  {% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block extra_head %}
+<link rel="stylesheet" href="/static/css/styles.css" /> {% endblock %} {% block
+content %}
 
 <center>
   <h1 class="neonText">User Search</h1>
-  <br><br>
+  <br /><br />
   <p>
-    <text class="white-background">view your friends calendar</text> 
+    <text class="white-background">view your friends calendar</text>
   </p>
 </center>
 
-
 <div class="container">
   <div class="row">
-   <div class="col-md-4">
-    <center>
-    <br><br>
-  {% from "_formhelpers.html" import render_field %}
-  <form method="POST" class="form-user-search">
-  <dl>
-  {{ render_field(form.username, placeholder="their username") }}
-  </dl>
-  <p><input type=submit value="user search">
-  </form>
-  <br><br>
-  </center>
+    <div class="col-md-4">
+      <center>
+        <br /><br />
+        {% from "_formhelpers.html" import render_field %}
+        <form method="POST" class="form-user-search">
+          <dl>
+            {{ render_field(form.username, placeholder="their username") }}
+          </dl>
+          <p><input type="submit" value="user search" /></p>
+        </form>
+
+        <br /><br />
+      </center>
+    </div>
   </div>
- </div>
 </div>
 
 {% endblock %}

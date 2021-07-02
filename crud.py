@@ -44,6 +44,12 @@ def get_user_by_username(username):
 
     return User.query.filter(User.username == username).first()
 
+def delete_user_by_username(username):
+    """Delete a user"""
+
+    db.session.delete(User.query.filter(User.username == username).first())
+    db.session.commit()
+
 
 def get_password_by_username(username):
     """Return a password by username."""

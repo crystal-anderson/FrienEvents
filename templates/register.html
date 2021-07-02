@@ -1,40 +1,34 @@
-{% extends 'base.html' %}
-
-{% block extra_head %}  <link rel="stylesheet" href="/static/css/styles.css">  {% endblock %}
-
-{% block content %}
-
+{% extends 'base.html' %} {% block extra_head %}
+<link rel="stylesheet" href="/static/css/styles.css" /> {% endblock %} {% block
+content %}
 
 <center>
   <h1 class="neonText">Register ♥</h1>
-  <br><br>
+  <br /><br />
   <p>
-    <text class="white-background">it's nice to meet you!</text> 
+    <text class="white-background">it's nice to meet you!</text>
   </p>
 </center>
 
-
 <div class="container">
- <div class="row">
-  <div class="col-md-4">
-   <center>
-   <br><br>
+  <div class="row">
+    <div class="col-md-4">
+      <center>
+        <br /><br />
 
-    {% from "_formhelpers.html" import render_field %}
-    <form method=post class="form-register">
-    <dl>
-    {{ render_field(form.username) }}
-    {{ render_field(form.email) }}
-    {{ render_field(form.password) }}
-    {{ render_field(form.confirm) }}
-    {{ render_field(form.accept_tos) }}
-    </dl>
-    <p><input type=submit value="let's go!">
-    </form>
+        {% from "_formhelpers.html" import render_field %}
+        <form method="post" class="form-register">
+          <dl>
+            {{ render_field(form.username) }} {{ render_field(form.email) }} {{
+            render_field(form.password) }} {{ render_field(form.confirm) }} {{
+            render_field(form.accept_tos) }}
+          </dl>
+          <p><input type="submit" value="let's go!" /></p>
+        </form>
 
-  <br><br>
-  </center>
+        <br /><br />
+      </center>
+    </div>
   </div>
- </div>
 </div>
 {% endblock %}

@@ -1,35 +1,37 @@
-{% extends 'base.html' %}
-
-{% block extra_head %}  <link rel="stylesheet" href="/static/css/styles.css">  {% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block extra_head %}
+<link rel="stylesheet" href="/static/css/styles.css" /> {% endblock %} {% block
+content %}
 
 <center>
   <h1 class="neonText">Login Page</h1>
-  <br><br>
+  <br /><br />
   <p>
-    <text class="white-background">let's get you logged in</text> 
+    <text class="white-background">let's get you logged in</text>
   </p>
 </center>
-  
-
 
 <div class="container">
- <div class="row">
-  <div class="col-md-4">
-    <center>
-    <br><br>
-  {% from "_formhelpers.html" import render_field %}
-  <form id="loginForm" class="form-login" method="POST" action="" role="form">
-    <dl>
-      {{ render_field(form.username) }}
-      {{ render_field(form.password) }}
-    </dl>
-  <p><input type=submit value="login">
-  </form>
-  <br><br>
-  </center>
+  <div class="row">
+    <div class="col-md-4">
+      <center>
+        <br /><br />
+        {% from "_formhelpers.html" import render_field %}
+        <form
+          id="loginForm"
+          class="form-login"
+          method="POST"
+          action=""
+          role="form"
+        >
+          <dl>
+            {{ render_field(form.username) }} {{ render_field(form.password) }}
+          </dl>
+          <p><input type="submit" value="login" /></p>
+        </form>
+
+        <br /><br />
+      </center>
+    </div>
   </div>
- </div>
 </div>
 {% endblock %}
