@@ -16,10 +16,8 @@ model.db.create_all()
 
 
 #random input for testing
-crud.create_user('cryssann@gmail.com', 'theusualpassword', 'tatchsnart')
-crud.create_user('namesmadly@gmail.com', 'herusualpassword', 'namesmadly')
-# crud.create_event('Austin City Limits', 'ACL Music Festival - Weekend 1', '2021-10-2', 'https://www.aclfestival.com/', '1')
-# crud.create_event('Austin City Limits', 'ACL Music Festival - Weekend 2', '2021-10-8', 'https://www.aclfestival.com/', '1')
+crud.create_user('self.crystal.ann@gmail.com', 'theusualpassword', 'crystal')
+crud.create_user('self.ashley@gmail.com', 'theirusualpassword', 'ashley')
 
 
 with open('data/events.json') as f:
