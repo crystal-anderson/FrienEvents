@@ -23,16 +23,18 @@ FrienEvents is a flask based app and utilizes TicketMaster's API to search for e
 
 ### Installation ###
 
- - [ ] git clone https://github.com/khanderz/MME-Calculator.git
- - [ ] cd FrienEvents
- - [ ] pip3 install -r requirements.txt
- - [ ] python3 seed_database.py
+| Command | Description |
+| --- | --- |
+| `git clone https://github.com/crystal-anderson/FrienEvents.git` | Clone the app |
+| `cd FrienEvents` | Enter the correct repository |
+| `pip3 install -r requirements.txt` | Install necessary requirements |
+| `python3 seed_database.py` | Create database |
 
 ### Run Program ###
 
- - [ ] python3 server.py
+ - `python3 server.py`
 
 ### Contact Me ###
 
-[LinkedIn](https://www.linkedin.com/in/crystal-ann/)
-[YouTube Presentation](https://youtu.be/1B9kSk5bVUA)
+- [LinkedIn](https://www.linkedin.com/in/crystal-ann/)
+- [YouTube Presentation](https://youtu.be/1B9kSk5bVUA)
